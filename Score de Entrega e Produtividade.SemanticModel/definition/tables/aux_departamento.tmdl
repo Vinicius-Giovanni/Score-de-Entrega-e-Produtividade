@@ -1,0 +1,34 @@
+table aux_departamento
+	excludeFromModelRefresh
+	lineageTag: 0c1b4657-7a24-48b0-863b-4e1fdbed3492
+
+	column desc_setor_item
+		dataType: string
+		lineageTag: 8c4729cf-8298-459c-9c29-e569ba1887ca
+		summarizeBy: none
+		sourceColumn: desc_setor_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_setor_2
+		dataType: string
+		lineageTag: f460179c-a427-402f-b7ae-a9808c41100d
+		summarizeBy: none
+		sourceColumn: desc_setor_2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_departamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("pVXLUtswFP0VTdahdLro/lq+ATGyZSTZHUJZuKAynknsjm1Y8Dddtlu66tY/1is7CYRXnbDzWPfcl845Oj+fAEdjlBbKMGQiVhlwhWYyncCla5ruvi6qhn29+fjx02eWFfm1W9KZRR4rqY4ETC6mlEPTv6Sq2+5n64pNOC5cW1dX1bL71bTFZdVQlBTxMbBAQ8xX2DQUig764O5P6ePWCay7LKtFdV3kvp8+cIBYFSkrMtX3edNWy6otbqs1bObqOl+6ss2bLVyAQT9Z4L51vzdFRPk9L9tiQQehyFAbyjpES5wDc8xQBuxhC3eXT5nJu79Xbg0P3PIAmzavfcQAwRWkz6I0ZKDxpN+Rye+qMi+aZ7W0iE9TDJU5TDAEObpJDhEG8EZmDsY3xFVsrE45+FXzvMnXiaPu/ta9AFOSHw88eDl6EzBEJ8PUEliI7ARi24/7MjRSGYoBGCKn/fC3Cm21FQoT4xkzaYKaSXUCoxcVZqEneCDTAw1nnoj5nas3TC3b2rWuLDxrqqdYNInSFgkuYY56V7BVMwjV6xM+2scMtaYbpfWNYfZWnSPCmTE6eqJdEc+UjsAKDnuhPa18x+QfUWooizC7LUiSPkJigdnfQ6TItBqv7Ih4atghixQ/FsPn4IL/cb3tJCqEUabwBOXv2ouEq7kfYwwrHkCnKWj7uoSfY+h2SYxiFPlWkAQ0idlwLax/FnZArvVPlB8n/xhs73WPzOvRaQIJStDC7yjJf7hFXvcU3FooGcEsjXzUlFZqIrQfpkyKKNn9bhK0vpJrn2nLyx8sivEUfUB4PFm7iDzJ8R0k1zjT4gjJLnsT3zuLF6/a8YE3MFcxeHK8cxMWAol2H59aIaeM7pb2aECRH0cqFvvkond6RlBgHGUqe7LunCMbN0U2DJ5aIUUIIZKOFTm199uRj94XJEXS8KPqPSAv/gE=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [desc_setor_item = _t, desc_setor_1 = _t, desc_setor_2 = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"desc_setor_item", type text}, {"desc_setor_1", type text}, {"desc_setor_2", type text}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado",{"desc_setor_1"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

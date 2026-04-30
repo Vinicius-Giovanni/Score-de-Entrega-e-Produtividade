@@ -1,0 +1,37 @@
+table bottleneck_galpao
+	lineageTag: b512e381-cd91-4a6d-9296-f12c7e53ed52
+
+	column olpn
+		dataType: string
+		lineageTag: 2fe863bd-80f2-43df-9f20-408795cd879f
+		summarizeBy: none
+		sourceColumn: olpn
+
+		annotation SummarizationSetBy = Automatic
+
+	column diferenca_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: ad567122-77a0-493b-ad17-92a1442cb2e5
+		summarizeBy: none
+		sourceColumn: diferenca_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bottleneck_galpao = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"c04cee02-8cb5-4d82-92f5-de8da1ccd0a0" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="c04cee02-8cb5-4d82-92f5-de8da1ccd0a0"]}[Data],
+				    df_banco_de_dados_bottleneck_galpao_ = #"c04cee02-8cb5-4d82-92f5-de8da1ccd0a0"{[entity="df_banco_de_dados_bottleneck_galpao",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_bottleneck_galpao_,{"data_hora_fim_olpn", "data_hora_putaway", "data_criterio"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

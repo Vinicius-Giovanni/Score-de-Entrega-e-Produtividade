@@ -1,0 +1,25 @@
+table aux_tpedido
+	excludeFromModelRefresh
+	lineageTag: cb73032f-6aed-43ff-8230-d6f589797ccf
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: e335ef36-fea7-45db-9b2e-e22b8d2875ff
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_tpedido = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("dZHRDoIwDEV/pfFZjQgafSxbJTVjw24SE+P//4ZFJsYQHrdzlt7ePZ+ruCtgA+STUIOAYBzrgeLqtR7gXqFQYpkIWOpC5BSyUamRBH28AKEFvKfQYmKDmR/+eSehEWzRZl4UE9+CC1eEnnGaAXX4eqV6WGNMZLjVIEGl8cHPqRadG9WjU56HdR8dWY0YwFH/3bU88zJql1G3jERRZN84TcGexuvqOEuZGx6SZuc0cww5kOuID+VUGgl5o419fhCMzbOL/a/WeaufNl5v", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [tipo_de_pedido = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"tipo_de_pedido", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

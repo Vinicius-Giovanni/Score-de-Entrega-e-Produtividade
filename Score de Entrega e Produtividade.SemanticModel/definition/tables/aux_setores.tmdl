@@ -1,0 +1,33 @@
+table aux_setores
+	excludeFromModelRefresh
+	lineageTag: ddaf8a45-9ac3-4e30-aeb3-d862fcb6a56b
+
+	column setores
+		dataType: string
+		lineageTag: e948ad36-2024-45fd-87dd-a66f34e8a2be
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores_1
+		dataType: string
+		lineageTag: 2a05dcd3-1022-4328-a9e0-4d71bf848c30
+		summarizeBy: none
+		sourceColumn: setores_1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_setores = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("nY7NCsIwEIRfZcnV9iHq36lgsXgKOWzSRVZiFpLg85uARQjqwdMOzOw3o7U6RnQsAReBiVI5SXVqVabT6jDsoYfBYsrk+E4hCywEo9ywjU7i5Vf2i1Ffz2yJI5YRkYq3gYul6DEsjO2ekCNdEXaeC4ZKtNb28/Rx9xYLxEnj/bPwTVrVq6Vhj/SgijoFz4GUMU8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [setores = _t, setores_1 = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"setores", type text}, {"setores_1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

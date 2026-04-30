@@ -1,0 +1,116 @@
+table putaway
+	lineageTag: 673835cf-b23c-466d-9ef1-a34aa01dc1a7
+
+	column olpn
+		dataType: string
+		lineageTag: dcf8e7da-69cc-4ed4-93fa-de9775e02ecb
+		summarizeBy: none
+		sourceColumn: olpn
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_pecas
+		dataType: int64
+		formatString: 0
+		lineageTag: d05eb8f2-ae64-4da1-a79c-21b439b19462
+		summarizeBy: sum
+		sourceColumn: qt_pecas
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_setor_item
+		dataType: string
+		lineageTag: 4efaedcb-3a60-4634-be16-008d41dfb6e5
+		summarizeBy: none
+		sourceColumn: desc_setor_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: b57a881d-6c41-4653-a835-d6da1bff0ab6
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column box
+		dataType: string
+		lineageTag: d7fbe5d9-94da-45c2-aa04-e5c6f6486b4a
+		summarizeBy: none
+		sourceColumn: box
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: c5465b26-69b1-4b05-9398-2178aa882d15
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_segundos_box_dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d4529dd-373c-4acf-b716-b15e674a3773
+		summarizeBy: sum
+		sourceColumn: duracao_segundos_box_dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: aa7cf3ae-e217-435a-9511-d108b22b9b4e
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74e7ad2d-4ce7-4ea3-82f3-07d0f4e1d23d
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 7e2b9af1-e7af-4b77-8275-1b83f4279575
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Nome da Origem'
+		dataType: string
+		lineageTag: 9a512554-a292-49f3-b191-9a5aca6fd44a
+		summarizeBy: none
+		sourceColumn: Nome da Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition putaway = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"06bb28cb-a930-475c-9096-decbb9daca02" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="06bb28cb-a930-475c-9096-decbb9daca02"]}[Data],
+				    df_banco_de_dados_putaway_eficiencia_operacional_ = #"06bb28cb-a930-475c-9096-decbb9daca02"{[entity="df_banco_de_dados_putaway_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_putaway_eficiencia_operacional_,{"pedido", "item", "data_hora_putaway"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

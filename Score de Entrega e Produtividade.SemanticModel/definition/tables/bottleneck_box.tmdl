@@ -1,0 +1,48 @@
+table bottleneck_box
+	lineageTag: a3ea0745-a72b-458b-bc7a-4b7f645ffdd7
+
+	column olpn
+		dataType: string
+		lineageTag: 9c60cbf0-6c1e-44da-a837-ad8c19f3711f
+		summarizeBy: none
+		sourceColumn: olpn
+
+		annotation SummarizationSetBy = Automatic
+
+	column diferenca_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: e827285c-e52e-4ab5-ae69-3d02d83d8c35
+		summarizeBy: none
+		sourceColumn: diferenca_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 88af6573-a5ac-4719-8e5f-ce359b771f23
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition bottleneck_box = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"6c767a38-d046-4850-8bca-2d2d59b03734" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="6c767a38-d046-4850-8bca-2d2d59b03734"]}[Data],
+				    df_banco_de_dados_bottleneck_box_ = #"6c767a38-d046-4850-8bca-2d2d59b03734"{[entity="df_banco_de_dados_bottleneck_box",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_bottleneck_box_,{"data_hora_load", "data_hora_putaway"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

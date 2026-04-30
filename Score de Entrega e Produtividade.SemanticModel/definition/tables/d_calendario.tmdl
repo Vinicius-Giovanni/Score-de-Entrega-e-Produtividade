@@ -1,0 +1,169 @@
+table d_calendario
+	excludeFromModelRefresh
+	lineageTag: f464fa8b-5ced-4d60-835d-d1b1ec30edef
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 77c2a0e8-a4ce-4009-8221-5f2dbcf1dca8
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data Sem Domingo'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 17e3cb39-7b51-4b79-a833-aed1acadeab9
+		summarizeBy: none
+		sourceColumn: Data Sem Domingo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 122baa84-5ec2-4b9e-9ba9-7a6b18e5d526
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: 06adfe2a-8842-4b12-a331-9712f3c534ab
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Mês'
+		dataType: string
+		lineageTag: f3d5cb76-8019-4b11-8f88-d10777be25e2
+		summarizeBy: none
+		sourceColumn: Nome Mês
+		sortByColumn: Mês
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Abrev.'
+		dataType: string
+		lineageTag: ed6ab7a2-4b11-426e-ba0e-83e0471cf81b
+		summarizeBy: none
+		sourceColumn: Mês Abrev.
+		sortByColumn: Mês
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 220c956a-81d1-49c1-863e-2347c9030558
+		summarizeBy: sum
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana'
+		dataType: int64
+		formatString: 0
+		lineageTag: de317f97-3a6d-47a4-8c15-ec755c5de528
+		summarizeBy: sum
+		sourceColumn: Dia da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Sem. Abrev.'
+		dataType: string
+		lineageTag: 931a197a-b485-465b-bb1a-3e4f550b2cef
+		summarizeBy: none
+		sourceColumn: Dia Sem. Abrev.
+		sortByColumn: 'Dia da Semana'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Ano'
+		dataType: int64
+		formatString: 0
+		lineageTag: cca5573f-03a0-4f1a-bb16-00caeb35a99b
+		summarizeBy: sum
+		sourceColumn: Semana do Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_calendario = m
+		mode: import
+		source = ```
+				let
+				    // 1. Defina o intervalo de datas
+				    DataInicio = #date(2024, 1, 1),
+				    DataFim = #date(2027, 12, 31),
+				
+				    // 2. Crie a lista de datas
+				    ListaDatas = List.Dates(DataInicio, Duration.Days(DataFim - DataInicio) + 1, #duration(1, 0, 0, 0)),
+				    TabelaDatas = Table.FromList(ListaDatas, Splitter.SplitByNothing(), {"Data"}),
+				
+				    // 3. Tipagem da coluna de data
+				    TabelaComColunas = Table.TransformColumns(TabelaDatas, {{"Data", each _, type date}}),
+				
+				    // 4. Cria a coluna "Data Sem Domingo"
+				    AdicionaDataSemDomingo = Table.AddColumn(TabelaComColunas, "Data Sem Domingo", each if Date.DayOfWeek([Data], Day.Sunday) = 0 then Date.AddDays([Data], -1) else [Data], type date),
+				
+				    // 5. Colunas auxiliares de tempo baseadas em "Data Sem Domingo"
+				    AdicionaAno = Table.AddColumn(AdicionaDataSemDomingo, "Ano", each Date.Year([Data Sem Domingo]), Int64.Type),
+				    AdicionaMes = Table.AddColumn(AdicionaAno, "Mês", each Date.Month([Data Sem Domingo]), Int64.Type),
+				    AdicionaNomeMes = Table.AddColumn(AdicionaMes, "Nome Mês", each Date.ToText([Data Sem Domingo], "MMMM"), type text),
+				    AdicionaNomeMesAbrev = Table.AddColumn(AdicionaNomeMes, "Mês Abrev.", each Date.ToText([Data Sem Domingo], "MMM"), type text),
+				    AdicionaTrimestre = Table.AddColumn(AdicionaNomeMesAbrev, "Trimestre", each "T" & Number.ToText(Date.QuarterOfYear([Data Sem Domingo])), type text),
+				    AdicionaSemestre = Table.AddColumn(AdicionaTrimestre, "Semestre", each if Date.Month([Data Sem Domingo]) <= 6 then "S1" else "S2", type text),
+				    AdicionaDia = Table.AddColumn(AdicionaSemestre, "Dia", each Date.Day([Data Sem Domingo]), Int64.Type),
+				    AdicionaDiaSemana = Table.AddColumn(AdicionaDia, "Dia da Semana", each Date.DayOfWeek([Data Sem Domingo]), Int64.Type),
+				    AdicionaNomeDiaSemana = Table.AddColumn(AdicionaDiaSemana, "Nome Dia da Semana", each Date.ToText([Data Sem Domingo], "dddd"), type text),
+				    AdicionaNomeDiaSemanaAbrev = Table.AddColumn(AdicionaNomeDiaSemana, "Dia Sem. Abrev.", each Date.ToText([Data Sem Domingo], "ddd"), type text),
+				    AdicionaSemanaMes = Table.AddColumn(AdicionaNomeDiaSemanaAbrev, "Semana do Mês", each 
+				    let
+				        inicioMes = Date.StartOfMonth([Data Sem Domingo]),
+				        diferencaDias = Duration.Days([Data Sem Domingo] - inicioMes),
+				        semanaMes = Number.RoundUp((diferencaDias + 1) / 7)
+				    in
+				        semanaMes
+				, Int64.Type),
+				
+				    // 6. Início/fim de períodos baseados em "Data Sem Domingo"
+				    AdicionaInicioMes = Table.AddColumn(AdicionaSemanaMes, "Início do Mês", each Date.StartOfMonth([Data Sem Domingo]), type date),
+				    AdicionaFimMes = Table.AddColumn(AdicionaInicioMes, "Fim do Mês", each Date.EndOfMonth([Data Sem Domingo]), type date),
+				    AdicionaInicioAno = Table.AddColumn(AdicionaFimMes, "Início do Ano", each #date(Date.Year([Data Sem Domingo]), 1, 1), type date),
+				    AdicionaFimAno = Table.AddColumn(AdicionaInicioAno, "Fim do Ano", each #date(Date.Year([Data Sem Domingo]), 12, 31), type date),
+				
+				    // 7. Flags baseadas em "Data Sem Domingo"
+				    AdicionaDiaUtil = Table.AddColumn(AdicionaFimAno, "É Dia Útil?", each Date.DayOfWeek([Data Sem Domingo], Day.Monday) < 5, type logical),
+				    AdicionaFimDeSemana = Table.AddColumn(AdicionaDiaUtil, "É Fim de Semana?", each Date.DayOfWeek([Data Sem Domingo], Day.Monday) >= 5, type logical),
+				    AdicionaHoje = Table.AddColumn(AdicionaFimDeSemana, "É Hoje?", each [Data Sem Domingo] = Date.From(DateTime.LocalNow()), type logical),
+				
+				    // 8. Chaves e textos baseados em "Data Sem Domingo"
+				    AdicionaAnoMes = Table.AddColumn(AdicionaHoje, "Ano-Mês", each Text.From(Date.Year([Data Sem Domingo])) & "-" & Text.PadStart(Text.From(Date.Month([Data Sem Domingo])), 2, "0"), type text),
+				    AdicionaChaveYMD = Table.AddColumn(AdicionaAnoMes, "Chave AAAAMMDD", each Date.ToText([Data Sem Domingo], "yyyyMMdd"), type text),
+				    AdicionaChaveYM = Table.AddColumn(AdicionaChaveYMD, "Chave AAAAMM", each Date.ToText([Data Sem Domingo], "yyyyMM"), type text),
+				    AdicionaSemanaAno = Table.AddColumn(AdicionaChaveYM, "Semana do Ano", each Date.WeekOfYear([Data Sem Domingo]), Int64.Type),
+				    #"Colunas Removidas" = Table.RemoveColumns(AdicionaSemanaAno,{"Chave AAAAMMDD", "Ano-Mês", "Chave AAAAMM", "Nome Dia da Semana", "Trimestre", "Semestre", "Fim do Mês", "Fim do Ano", "Início do Mês", "Início do Ano", "Semana do Mês", "É Fim de Semana?", "É Hoje?", "É Dia Útil?"})
+				
+				
+				in
+				    #"Colunas Removidas"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,45 @@
+table usuarios
+	lineageTag: b9129427-022b-4ba9-9d78-ff8a72e1ee41
+
+	column User
+		dataType: string
+		lineageTag: 032e08eb-7362-456c-a681-6bf9bc8d0dc2
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supervisor Id'
+		dataType: string
+		lineageTag: f0fd2a8f-655d-4ad7-a0a3-1a1365285ec5
+		summarizeBy: none
+		sourceColumn: Supervisor Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 0c11f3df-f9ec-4fbf-adba-6578d4cfa5ce
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition usuarios = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"4d901ae2-1d82-48a8-ba8d-1906e11e5af9" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="4d901ae2-1d82-48a8-ba8d-1906e11e5af9"]}[Data],
+				    df_banco_de_dados_registro_de_usuarios_ = #"4d901ae2-1d82-48a8-ba8d-1906e11e5af9"{[entity="df_banco_de_dados_registro_de_usuarios",version=""]}[Data],
+				    #"Personalização Adicionada" = Table.AddColumn(df_banco_de_dados_registro_de_usuarios_, "terceiro?", each if Text.Start([User],2) = "77" then "TERCEIRO" else "COLABORADOR"),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Personalização Adicionada",{"terceiro?"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

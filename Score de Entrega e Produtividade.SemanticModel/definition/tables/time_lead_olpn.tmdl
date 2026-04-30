@@ -1,0 +1,37 @@
+table time_lead_olpn
+	lineageTag: 3dc60752-69a6-480f-85f0-08828fdbcd4d
+
+	column olpn
+		dataType: string
+		lineageTag: 237bc2e8-4b52-4e29-907e-761048113ae2
+		summarizeBy: none
+		sourceColumn: olpn
+
+		annotation SummarizationSetBy = Automatic
+
+	column diferenca_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: b9170fd6-b79a-4198-965d-69d7893c1b4e
+		summarizeBy: none
+		sourceColumn: diferenca_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition time_lead_olpn = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"e7384f47-8796-4ea8-b0f7-a312889c0c3a" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="e7384f47-8796-4ea8-b0f7-a312889c0c3a"]}[Data],
+				    df_banco_de_dados_time_lead_olpn_ = #"e7384f47-8796-4ea8-b0f7-a312889c0c3a"{[entity="df_banco_de_dados_time_lead_olpn",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_time_lead_olpn_,{"data_hora_load", "data_pedido", "hora", "data_criterio"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

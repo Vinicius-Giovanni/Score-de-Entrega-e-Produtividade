@@ -1,0 +1,36 @@
+table aux_zona
+	excludeFromModelRefresh
+	lineageTag: b5f314d2-5065-4219-a6c1-6493e4f43f69
+
+	column local
+		dataType: string
+		lineageTag: efda8df3-6e91-474d-858d-23b6e2154c7d
+		summarizeBy: none
+		sourceColumn: local
+
+		annotation SummarizationSetBy = Automatic
+
+	column zona
+		dataType: string
+		lineageTag: d5433e80-3e3f-4a5d-9048-88746124d8b5
+		summarizeBy: none
+		sourceColumn: zona
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_zona = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce"]}[Data],
+				    df_banco_de_dados_registro_de_zonas_ = #"c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce"{[entity="df_banco_de_dados_registro_de_zonas",version=""]}[Data]
+				in
+				    df_banco_de_dados_registro_de_zonas_
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,3418 @@
+table medidas
+	excludeFromModelRefresh
+	lineageTag: 4a32173e-c228-4301-a3da-f0525b2d6681
+
+	measure qt_cancelada =
+			
+			SUM(cancel[qt_pecas])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Nº Macro\Cancel
+		lineageTag: 5fb22974-8623-4262-b696-709a8b6dc4f1
+
+	measure qt_cancel_mesclado =
+			
+			
+			FORMAT([qt_cancelada], "#,##0")&" "&[qt_cancel_mom]
+		displayFolder: Análise Prescritiva\Nº Macro\Cancel
+		lineageTag: 7ed8a890-3690-4e6b-81af-d9747fa640cd
+
+	measure qt_cancel_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_cancelada],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_cancelada], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Nº Macro\Cancel
+		lineageTag: eda69844-1a14-4b8b-8c5a-b94d6196b94f
+
+	measure qt_loaded =
+			
+			
+			SUM(load[qt_pecas])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Nº Macro\Loaded
+		lineageTag: e8178aad-65b4-40fe-9b5c-9af9df24f660
+
+	measure qt_olpn =
+			
+			
+			SUM(olpn[qt_pecas])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Nº Macro\oLPN
+		lineageTag: f8a69f5d-10ab-41e2-abbd-7010b1e5256c
+
+	measure qt_olpn_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_olpn], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Nº Macro\oLPN
+		lineageTag: 1f3c0b62-5c1d-4831-b145-d0aa35b248ef
+
+	measure qt_olpn_mesclado =
+			
+			
+			FORMAT([qt_olpn], "#,##0")&" "&[qt_olpn_mom]
+		displayFolder: Análise Prescritiva\Nº Macro\oLPN
+		lineageTag: cc11ff20-edc5-4e70-8acb-d8aafd0b833b
+
+	measure qt_packed =
+			
+			SUM(picking[qt_separada])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Nº Macro\Packed
+		lineageTag: 837c7b9b-303a-4136-82e1-3dbe84626e12
+
+	measure qt_packed_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_packed],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packed], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Nº Macro\Packed
+		lineageTag: 4c4a490a-f420-4cc6-b587-9675a238b198
+
+	measure qt_putaway =
+			
+			
+			SUM(putaway[qt_pecas])
+		formatString: 0
+		displayFolder: Análise Prescritiva\Nº Macro\Putaway
+		lineageTag: 7acdb23a-ff4a-4b3d-9d3b-dc712b9275c2
+
+	measure eficiencia_sla = ```
+			
+			1 - 
+			DIVIDE(
+			    [qt_cancelada],
+			    [qt_olpn])
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Análise Prescritiva\Nº Macro\SLA
+		lineageTag: 3b61895f-9086-4c6a-a078-6cd34b74b95e
+
+	measure eficiencia_sla_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [eficiencia_sla],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [eficiencia_sla], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Nº Macro\SLA
+		lineageTag: b6fa566b-cbd2-49e9-8f02-a6df78099805
+
+	measure eficiencia_sla_mesclado =
+			
+			
+			FORMAT([eficiencia_sla], "0.0%")&" "&[eficiencia_sla_mom]
+		displayFolder: Análise Prescritiva\Nº Macro\SLA
+		lineageTag: aeea93e6-f9d7-48ec-aa9c-21b859de5dc0
+
+	measure media_olpn_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(olpn[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_olpn],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Média
+		lineageTag: c3959969-ff60-4103-bb40-daff62c3de1b
+
+	measure media_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_olpn_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_olpn_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Média
+		lineageTag: 0fe8eae0-8dca-45ec-8fdc-eb47d67c3295
+
+	measure media_olpn_mesclado =
+			
+			
+			FORMAT([media_olpn_diarizado], "#,##0")&" "&[media_mom]
+		displayFolder: Análise Prescritiva\Média
+		lineageTag: 3203309e-b70b-4c9c-b343-412d2ccb931d
+
+	measure desvio_padrao_olpn =
+			
+			STDEV.P(desvio_padrao[qtd_pecas])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Desvio Padrão
+		lineageTag: 80f1f674-5e07-4f74-90f7-8e6050e05d1a
+
+	measure desvio_padrao_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [desvio_padrao_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [desvio_padrao_olpn], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Desvio Padrão
+		lineageTag: 0c6988f9-eeb1-46f6-916f-68fb657269b0
+
+	measure desvio_padrao_mesclado =
+			
+			
+			FORMAT([desvio_padrao_olpn], "#,##0")&" "&[desvio_padrao_mom]
+		displayFolder: Análise Prescritiva\Desvio Padrão
+		lineageTag: 033abda5-db4c-4bf5-a564-a34e8338e78c
+
+	measure pico_olpn =
+			
+			MAXX(
+			    VALUES(
+			        olpn[data_criterio]),
+			        [qt_olpn])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Vales e Picos
+		lineageTag: 7832952c-dcc3-4804-ae36-c7afa0352dfd
+
+	measure pico_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [pico_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [pico_olpn], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Análise Prescritiva\Vales e Picos
+		lineageTag: 48077aac-aaae-4f0f-97d9-60e60d5cfe13
+
+	measure pico_mesclado =
+			
+			
+			FORMAT([pico_olpn], "#,##0")&" "&[pico_mom]
+		displayFolder: Análise Prescritiva\Vales e Picos
+		lineageTag: 55652e41-946d-4bc5-a6df-6c8cdf265853
+
+	measure ultima_atualizacao =
+			
+			
+			SELECTEDVALUE(aux_update[data])&" "&SELECTEDVALUE(aux_update[hora])
+		displayFolder: Outros
+		lineageTag: 5bdea421-8272-4a9d-a0ea-6e75d41169a7
+
+	measure usuario = ```
+			
+			
+			VAR UsuarioCompleto = USERPRINCIPALNAME()
+			VAR UsuarioSemDominio = LEFT(UsuarioCompleto, SEARCH("@", UsuarioCompleto, 1) - 1)
+			VAR UsuarioComEspacos = SUBSTITUTE(UsuarioSemDominio, ".", " ")
+			
+			VAR PalavrasSeparadas = SUBSTITUTE(UsuarioComEspacos, " ", "|")
+			VAR ListaPalavras = 
+			    ADDCOLUMNS(
+			        GENERATESERIES(1, PATHLENGTH(PalavrasSeparadas)),
+			        "Palavra", PATHITEM(PalavrasSeparadas, [Value])
+			    )
+			VAR NomeCapitalizado = 
+			    CONCATENATEX(
+			        ListaPalavras,
+			        UPPER(LEFT([Palavra], 1)) & LOWER(MID([Palavra], 2, LEN([Palavra]))),
+			        " "
+			    )
+			RETURN NomeCapitalizado
+			```
+		displayFolder: Outros
+		lineageTag: a21fe034-599c-4aca-b374-b98df65963a2
+
+	measure produtividade_homem_hora_picking = ```
+			
+			
+			VAR A =
+			INT(
+			DIVIDE(SUM(jornada[jornada_segundos]),3600,0))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packed],
+			    A)
+			
+			RETURN 
+			B
+			```
+		formatString: 0.00
+		displayFolder: Produtividade H/H
+		lineageTag: dacc30d9-dcbd-42a5-a4e2-e035c439bd00
+
+	measure produtividade_homem_hora_putaway = ```
+			
+			
+			VAR A =
+			INT(
+			DIVIDE(SUM(jornada[jornada_segundos]),3600,0))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_putaway],
+			    A)
+			
+			RETURN 
+			B
+			```
+		formatString: 0.00
+		displayFolder: Produtividade H/H
+		lineageTag: ba82cf91-364f-4e8d-90c8-9df4ebbbae46
+
+	measure qt_movimentada_din_user =
+			
+			
+			IF(
+			    ISFILTERED(
+			        usuarios[Name]),
+			        [qt_packed],
+			        [qt_olpn])
+		formatString: #,0
+		displayFolder: Outros
+		lineageTag: b84305de-fdfd-4725-8ff7-2ddd80e18212
+
+	measure entrega_in_full = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    DISTINCTCOUNT(picking[olpn]),
+			    picking[qt_separada] < picking[qt_requerida])
+			
+			VAR B = 
+			1 - 
+			DIVIDE(
+			    A,
+			    DISTINCTCOUNT(picking[olpn]))
+			
+			RETURN
+			B
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Análise Prescritiva\OTIF\In-Full
+		lineageTag: 8f0fdc9b-dc6c-4380-969f-a39a74b3470f
+
+	measure on_time = ```
+			
+			
+			VAR olpn_on_time = 
+			CALCULATE(
+			    DISTINCTCOUNT(picking[olpn]),
+			    picking[duracao_olpn_segundos] <= INT(SELECTEDVALUE(aux_on_time[segundos])))
+			
+			VAR total_olpn = 
+			DISTINCTCOUNT(picking[olpn])
+			
+			VAR logica_final = 
+			1 - 
+			DIVIDE(
+			    olpn_on_time,total_olpn,0)
+			
+			RETURN
+			logica_final
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Análise Prescritiva\OTIF\On-Time
+		lineageTag: a60cd735-026e-44d5-b4c5-46dec2feb01b
+
+	measure otif = ```
+			
+			
+			VAR olpn_errada = 
+			CALCULATE(
+			    DISTINCTCOUNT(picking[olpn]),
+			    picking[duracao_olpn_segundos] <= INT(SELECTEDVALUE(aux_on_time[segundos])) || picking[qt_separada] < picking[qt_requerida])
+			
+			VAR total_olpn = 
+			DISTINCTCOUNT(picking[olpn])
+			
+			VAR otif =
+			1 - 
+			DIVIDE(
+			    olpn_errada,total_olpn)
+			
+			RETURN 
+			otif
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Análise Prescritiva\OTIF\OTIF
+		lineageTag: db21f2c3-5871-4f47-9f8b-c91b5a6cd5fc
+
+	measure %_movimentado_olpn_setores/modalidades = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_olpn],
+			    ALL(aux_setores))
+			
+			VAR B = 
+			[qt_olpn]
+			
+			RETURN
+			B/A
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: % Percents
+		lineageTag: 238b8d1f-98e3-4fa5-be72-bcd8e5e00cad
+
+	measure bottleneck_box = ```
+			
+			
+			VAR vsegundos = 
+			SUM(
+			    bottleneck_box[diferenca_segundos])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vsegundos,COUNT(bottleneck_box[olpn]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: eb34d4ad-6aa2-4108-8321-336fc0dc96de
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure bottleneck_box_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [bottleneck_box_outlier],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [bottleneck_box_outlier], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: 10d3b806-8ebb-4448-be0d-9374fbb5d072
+
+	measure bottleneck_box_outlier =
+			
+			CALCULATE(
+			    [bottleneck_box],
+			    bottleneck_box[data_criterio] <> DATE(2024,9,27), // Outlier: operação do online, peças ficaram o dia inteiro dentro do box
+			    bottleneck_box[olpn] <> "11267194") // Outlier: olpn conferida antes da realização da puxada???
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: 1dca76de-93b8-48e0-803b-1dc75b32f037
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure bottleneck_salao = ```
+			
+			
+			VAR vsegundos = 
+			SUM(
+			    bottleneck_galpao[diferenca_segundos])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vsegundos,COUNT(bottleneck_galpao[olpn]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Bottleneck Galpão
+		lineageTag: 177675db-b9f3-4f55-b16d-10ba333af804
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure bottleneck_salao_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [bottleneck_salao],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [bottleneck_salao], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Bottleneck Galpão
+		lineageTag: 8e5d4b8b-0ce4-4215-9b21-c2d053af1641
+
+	measure time_lead_load = ```
+			
+			
+			VAR vSegundos = 
+			SUM(load[duracao_segundos_box_dia])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vSegundos,
+			    COUNT(load[box]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Conferencia
+		lineageTag: 2bc3ebac-5963-48ea-9850-85dd2ff9e355
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure time_lead_load_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [time_lead_load],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [time_lead_load], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Conferencia
+		lineageTag: d1bc46f4-70cb-49e0-b20e-7c38eb990257
+
+	measure time_lead_picking = ```
+			
+			
+			VAR vsegundos = 
+			SUM(
+			    picking[duracao_tarefa_segundos])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vsegundos,COUNT(picking[tarefa]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Picking
+		lineageTag: 6c6a9a58-30be-4596-83ff-2385c3a2980c
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure time_lead_picking_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [time_lead_picking],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [time_lead_picking], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Picking
+		lineageTag: 32992456-a9c3-4345-b68a-acaf9c322477
+
+	measure time_lead_putaway = ```
+			
+			
+			VAR vSegundos = 
+			SUM(putaway[duracao_segundos_box_dia])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vSegundos,
+			    COUNT(putaway[box]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Putaway
+		lineageTag: d1d64974-ae6b-447a-b946-ebc025c999bd
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure time_lead_putaway_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [time_lead_putaway],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [time_lead_putaway], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Putaway
+		lineageTag: 98cde225-7c96-4b36-b472-d896e4c7ff59
+
+	measure time_lead_olpn = ```
+			
+			
+			VAR vsegundos = 
+			SUM(
+			    time_lead_olpn[diferenca_segundos])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vsegundos,COUNT(time_lead_olpn[olpn]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Time Lead Operacional
+		lineageTag: 09fb3866-d267-4e20-a95c-8303eee94f0c
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure time_lead_olpn_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [time_lead_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [time_lead_olpn], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Time Lead Operacional
+		lineageTag: 8c58d15d-9fe9-4300-a3ce-c9cedd71106f
+
+	measure produtividade_homem_hora_load = ```
+			
+			
+			VAR A =
+			INT(
+			DIVIDE(SUM(jornada[jornada_segundos]),3600,0))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_loaded],
+			    A)
+			
+			RETURN 
+			B
+			```
+		formatString: 0.00
+		displayFolder: Produtividade H/H
+		lineageTag: 1a5aaa7d-ef16-4ac4-9ee6-1f9570605bdc
+
+	measure produtividade_homem_hora_geral = ```
+			
+			
+			VAR A =
+			INT(
+			DIVIDE(SUM(jornada[jornada_segundos]),3600,0))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_putaway]+[qt_packed]+[qt_loaded],
+			    A)
+			
+			RETURN 
+			B
+			```
+		formatString: 0.00
+		displayFolder: Produtividade H/H
+		lineageTag: 7a7f252a-7784-486f-a945-eda7d57480e1
+
+	measure %_movimentada_mesclado =
+			
+			
+			FORMAT([qt_olpn], "#,##0")&" "&FORMAT([%_movimentado_olpn_setores/modalidades],"0.0%")
+		displayFolder: % Percents
+		lineageTag: 3bbfb193-3baa-46d9-8d76-0aa279d8991a
+
+	measure time_lead_pack = ```
+			
+			
+			VAR vSegundos = 
+			SUM(packing[duracao_segundos_tote_dia])
+			
+			VAR vTotal = 
+			DIVIDE(
+			    vSegundos,
+			    COUNT(packing[tote]))
+			
+			VAR horas = 
+			INT(vTotal/3600)
+			VAR vmod = 
+			MOD(vTotal,3600)
+			VAR minutos = 
+			INT(vmod/60)
+			VAR segundos = 
+			MOD(vTotal,60)
+			VAR hora_tratada = 
+			horas * 10000+
+			minutos * 100+
+			segundos
+			
+			RETURN
+			hora_tratada
+			```
+		formatString: 00:00:00
+		displayFolder: Time Lead Operacional\Packing
+		lineageTag: 66f50b88-f085-4562-a558-76324b703d0d
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure time_lead_pack_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [time_lead_pack],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [time_lead_pack], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			RETURN
+			C
+			```
+		displayFolder: Time Lead Operacional\Packing
+		lineageTag: e50c7d4c-e19f-47e6-a9e3-3946c2183a5f
+
+	measure qt_packing =
+			
+			SUM(packing[qt_pecas])
+		formatString: #,0
+		displayFolder: Análise Prescritiva\Nº Macro\Pack
+		lineageTag: e2d69d06-eb99-49ee-8914-5391361db1d2
+
+	measure y_dinamico_picking_diario =
+			
+			
+			MAXX(VALUES(d_calendario[Data]), [qt_packed]) * 2
+		formatString: 0
+		displayFolder: Detalhe\Picking
+		lineageTag: 222267f1-56ab-46a5-8ddb-46f8932f3dbf
+
+	measure pçs/ped_picking =
+			
+			
+			DIVIDE(
+			    [qt_packed],
+			    DISTINCTCOUNT(picking[pedido]),0)
+		formatString: 0.00
+		displayFolder: Detalhe\Picking
+		lineageTag: d6ede70e-d29c-42d4-a153-8827da70f285
+
+	measure y_dinamico_picking_hora =
+			
+			
+			MAXX(VALUES(aux_hora[hora]), [qt_packed]) * 3
+		formatString: 0
+		displayFolder: Detalhe\Picking
+		lineageTag: 4f7de33e-b78e-4876-a6e7-f427276697b3
+
+	measure qt_pedido_picking =
+			
+			DISTINCTCOUNT(picking[pedido])
+		formatString: #,0
+		displayFolder: Detalhe\Picking
+		lineageTag: d6d0a431-8d45-49fc-ac70-b6b30c0e68f8
+
+	measure media_picking_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(picking[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packed],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Picking
+		lineageTag: 20ae0af3-3a74-444b-9f89-25b1bd6160c7
+
+	measure media_picking_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(picking[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packed],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Picking
+		lineageTag: f0fb899d-46e8-4e0d-8518-d3d584b1d90f
+
+	measure media_picking_pedido_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(picking[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_picking],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Picking
+		lineageTag: 11821f8d-73e7-4eaa-b863-e77cd3af8f1e
+
+	measure media_picking_pedido_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(picking[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_picking],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Picking
+		lineageTag: d6b7f064-3985-415e-98ff-a06d8821cfdc
+
+	measure pçs/ped_packed =
+			
+			
+			DIVIDE(
+			    [qt_packing],
+			    DISTINCTCOUNT(packing[pedido]),0)
+		formatString: 0.00
+		displayFolder: Detalhe\Packing
+		lineageTag: 71c3feb1-d1ab-414e-b5a8-e09719db3a67
+
+	measure qt_pedido_packing =
+			
+			DISTINCTCOUNT(packing[pedido])
+		formatString: #,0
+		displayFolder: Detalhe\Packing
+		lineageTag: 208db628-bc24-4d36-a9e2-f88702a83ec5
+
+	measure y_dinamico_packing_diario =
+			
+			
+			MAXX(VALUES(d_calendario[Data]), [qt_packing]) * 3
+		formatString: 0
+		displayFolder: Detalhe\Packing
+		lineageTag: 8e5134bf-c5dc-430c-b614-9ffe2286f6d3
+
+	measure media_packing_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(packing[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packing],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Packing
+		lineageTag: 040214eb-e392-4083-ad35-e95204d0a517
+
+	measure media_packing_pedido_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(packing[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_packing],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Packing
+		lineageTag: 2585d0df-f663-4c74-960a-38d1cd47afbb
+
+	measure media_packing_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(packing[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packing],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Packing
+		lineageTag: e4b71877-949d-4767-aec9-a5b9d69e3411
+
+	measure media_packing_pedido_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(packing[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_packing],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Packing
+		lineageTag: 25561b61-9530-4f19-b7ff-5a4a5e52d7c4
+
+	measure y_dinamico_packing_hora =
+			
+			
+			MAXX(VALUES(aux_hora[hora]), [qt_packing]) * 3
+		formatString: 0
+		displayFolder: Detalhe\Packing
+		lineageTag: fcba7ea7-c08d-4e60-8ac8-2ae3925fd932
+
+	measure media_loaded_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(load[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_loaded],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Loaded
+		lineageTag: c6918814-ef80-4441-a0a0-43b56d972260
+
+	measure media_load_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(load[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_loaded],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Loaded
+		lineageTag: b47eb412-7201-48a2-8e05-acb50af33d3c
+
+	measure media_load_pedido_diarizado =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(load[data_criterio])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_load],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Loaded
+		lineageTag: 7a8ca36e-7977-474d-998b-d5e792c36995
+
+	measure media_load_pedido_hora =
+			
+			
+			VAR A =
+			DISTINCTCOUNT(load[hora])
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_load],A)
+			
+			RETURN
+			B
+		formatString: #,0
+		displayFolder: Detalhe\Loaded
+		lineageTag: 04501f25-3d13-4991-8c86-afed0738f240
+
+	measure pçs/ped_load =
+			
+			
+			DIVIDE(
+			    [qt_loaded],
+			    DISTINCTCOUNT(load[pedido]),0)
+		formatString: #,0.00
+		displayFolder: Detalhe\Loaded
+		lineageTag: 8934738a-c293-415a-99ae-7881426789a5
+
+	measure qt_pedido_load =
+			
+			DISTINCTCOUNT(load[pedido])
+		formatString: #,0
+		displayFolder: Detalhe\Loaded
+		lineageTag: a3d0b046-a6eb-4ea1-8dd6-f02c5e976ba5
+
+	measure y_dinamico_load_diario =
+			
+			
+			MAXX(VALUES(d_calendario[Data]), [qt_loaded]) * 3
+		formatString: 0
+		displayFolder: Detalhe\Loaded
+		lineageTag: ae9b6719-801f-440c-a804-65546ee2831d
+
+	measure y_dinamico_load_hora =
+			
+			
+			MAXX(VALUES(aux_hora[hora]), [qt_loaded]) * 3
+		formatString: 0
+		displayFolder: Detalhe\Loaded
+		lineageTag: b66253a0-4e17-460c-9126-1a3eca05eac1
+
+	measure calendario_expedidos = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_movimentada_din_user]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			VAR vCap =
+			SWITCH(
+			    TRUE(),
+			    SUM(capacity_1200[Capacity]) < 0, "-",
+			    vTotal_vendas = 0 , "-",
+			    FORMAT([cap_din_calendar], "0.0%"))
+			        
+			VAR retorna = 
+			vDia& UNICHAR(10)
+			&vTotal_vendas_formatada& UNICHAR(10)
+			&vCap
+			
+			RETURN 
+			retorna
+			```
+		displayFolder: Calendário Dinâmico
+		lineageTag: eaa6bd3c-bc33-4732-ad57-d92e7b85658d
+
+	measure format_ind_background =
+			
+			
+			VAR vFDS_check =
+			SWITCH(
+			    TRUE(),
+			    ISBLANK([qt_movimentada_din_user]), "#F5F5F5",
+			    [cap_din_calendar] > 1 , "#A8A8A8",
+			    "#D8D8D8"
+			)
+			
+			RETURN vFDS_check
+		displayFolder: Calendário Dinâmico
+		lineageTag: b3fec5c8-716d-48ea-b335-328d294e89c9
+
+	measure cap_din_calendar =
+			
+			
+			DIVIDE(
+			    [qt_olpn],
+			    INT(SUM(capacity_1200[Capacity]))
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Calendário Dinâmico
+		lineageTag: da1ee529-903a-4b88-9489-f50c11d8d692
+
+	measure format_ind_valores =
+			
+			
+			IF(
+			    ISBLANK([qt_olpn]), "#A8A8A8", "#333333")
+		displayFolder: Calendário Dinâmico
+		lineageTag: a6407dff-8a3d-4a9c-8da8-6a5ab80bff83
+
+	measure subtitulo_din = ```
+			
+			
+			VAR vPeriodo = 
+			FORMAT(MAX(d_calendario[Data Sem Domingo]), "mmm/yyyy")
+			
+			VAR vTotal_vendas = 
+			[qt_movimentada_din_user]
+			
+			VAR vol = 
+			SUM(olpn[volume])
+			
+			VAR vVol =
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000, FORMAT(vol, "#,0,.000.0 m³"),
+			        FORMAT(vol, "# m³"))
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			
+			"Total expedido em "&" "&vPeriodo&" foi "&vTotal_vendas_formatada&" | Com o volume mº de "&vVol
+			```
+		displayFolder: Calendário Dinâmico
+		lineageTag: 5d4bb6e2-781d-42ce-997e-126fde7b3902
+
+	measure calendar_Expedidos_sem = ```
+			
+			
+			VAR vTotal_vendas = 
+			[qt_movimentada_din_user]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			VAR cond_exp = 
+			IF( vTotal_vendas = 0, "-", vTotal_vendas_formatada)
+			
+			VAR vMedia = 
+			[media_olpn_diarizado]
+			
+			VAR vMedia_formata = 
+			    SWITCH(
+			        TRUE(),
+			        vMedia >= 1000000000, FORMAT(vMedia, "#,0,,,.00 bi"),
+			        vMedia >= 1000000, FORMAT(vMedia, "#,0,,.00 mi"),
+			        vMedia >= 1000, FORMAT(vMedia, "#,0,.00 k"),
+			        FORMAT(vMedia, "#"))
+			
+			VAR cond_media = 
+			IF( vMedia_formata = "", "-", vMedia_formata)
+			
+			
+			RETURN 
+			"-"&UNICHAR(10)&
+			"Total "&cond_exp
+			&UNICHAR(10)&
+			"Média "&cond_media
+			```
+		displayFolder: Calendário Dinâmico
+		lineageTag: 1ca0e2b6-49d5-456f-a519-dbbad267657f
+
+	measure saudacao = ```
+			
+			
+			VAR vSaudacao = 
+			SWITCH(
+			    TRUE(),
+			    HOUR(NOW()) >= 6 && HOUR(NOW()) < 12, "Bom dia!",
+			    HOUR(NOW()) >= 12 && HOUR(NOW()) < 18, "Boa tarde!",
+			    "Boa noite!"
+			)
+			
+			VAR vNome = 
+			[usuario]
+			
+			VAR vRetorno = 
+			vSaudacao&" "&vNome
+			
+			RETURN
+			vRetorno
+			```
+		displayFolder: Outros
+		lineageTag: 1727d1ce-bece-468d-805e-2ab904335606
+
+	measure 'qnt movimentada dinamica picking/olpn mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_movimentada_din_user],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([qt_movimentada_din_user], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Expedição
+		lineageTag: 96a73642-7c4e-4762-ada1-20fe9055c715
+
+	measure 'merge picking/olpn % - m-1' =
+			
+			
+			[qnt movimentada dinamica picking/olpn mom %]&" | "&FORMAT([quantidade olpn m-1], "#,##0")
+		displayFolder: Cartões Strings\Expedição
+		lineageTag: 86ee221b-83a2-4ad4-8bf2-f4c66598a257
+
+	measure 'quantidade olpn m-1' =
+			
+			CALCULATE(
+			    [qt_movimentada_din_user],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Expedição
+		lineageTag: 8750d0d7-bd0e-45ff-bda7-3fb2fce54fbb
+
+	measure 'total pcs olpn string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_movimentada_din_user]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Expedição
+		lineageTag: 2362c7a3-b685-490d-8a7f-211627e9840b
+
+	measure 'merge cancelados % - m-1' =
+			
+			
+			[qnt dinamica cancelada mom %]&" | "&FORMAT([quantidade cancelada m-1], "#,##0")
+		displayFolder: Cartões Strings\Cancelados
+		lineageTag: 5db71987-ce8d-45d4-b8d7-c917bb2dac2d
+
+	measure 'qnt dinamica cancelada mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_cancelada],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([qt_cancelada], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Cancelados
+		lineageTag: f961886b-312d-487b-bdca-3fff337adf27
+
+	measure 'quantidade cancelada m-1' =
+			
+			CALCULATE(
+			    [qt_cancelada],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Cancelados
+		lineageTag: f9b485bf-a54b-4966-9067-c3c7fb5e3cf3
+
+	measure 'total pcs canceladas string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_cancelada]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Cancelados
+		lineageTag: e8300ab0-bb62-416b-85c7-a3348d322c8b
+
+	measure 'SLA m-1' =
+			
+			CALCULATE(
+			    [eficiencia_sla],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Cartões Strings\SLA
+		lineageTag: 599a96dc-3309-46f3-b68b-e7d63993c1e6
+
+	measure 'SLA % - m-1' =
+			
+			
+			[eficiencia_sla_mom]&" | "&FORMAT([SLA m-1], "0.0%")
+		displayFolder: Cartões Strings\SLA
+		lineageTag: 35a945f1-64e2-4ebf-8c66-8b90c896d3fd
+
+	measure 'SLA string' = ```
+			
+			
+			VAR sla = 
+			1 - DIVIDE(
+			    [qt_cancelada], [qt_olpn])
+			
+			RETURN
+			FORMAT(sla, "0.0%")
+			```
+		displayFolder: Cartões Strings\SLA
+		lineageTag: 321a886d-a4d2-404d-9b50-de8838b8af22
+
+	measure 'quantidade media diarizada m-1' =
+			
+			CALCULATE(
+			    [media_olpn_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Média
+		lineageTag: 9a5137fc-5958-44c2-918a-355772898987
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'media mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_olpn_diarizado],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([media_olpn_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Média
+		lineageTag: 5c5f5ab0-44fa-482d-8857-756de4e8341c
+
+	measure 'merge media % - m-1' =
+			
+			
+			[media mom %]&" | "&FORMAT([quantidade media diarizada m-1], "#,##0")
+		displayFolder: Cartões Strings\Média
+		lineageTag: b20f8090-a4a3-4682-b7eb-a3d5de5d5304
+
+	measure 'media string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_olpn_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Média
+		lineageTag: 752cbebe-f984-4645-9b42-92ca475e0c42
+
+	measure 'desvio padrao mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [desvio_padrao_olpn],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([desvio_padrao_olpn], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Desvio Padrão
+		lineageTag: 6a61675b-3a50-4871-a7c0-2a27b2fb3792
+
+	measure 'desvio padrao m-1' =
+			
+			CALCULATE(
+			    [desvio_padrao_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Desvio Padrão
+		lineageTag: 4aba2076-c923-4d3c-911b-3f1be3a12f8f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'merge desvio padrao % - m-1' =
+			
+			
+			[desvio padrao mom %]&" | "&FORMAT([desvio padrao m-1], "#,##0")
+		displayFolder: Cartões Strings\Desvio Padrão
+		lineageTag: 28dfaee4-4921-4ac5-8605-156f1fde69e8
+
+	measure 'desvio padrao string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[desvio_padrao_olpn]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Desvio Padrão
+		lineageTag: 4055ee2d-9d41-40d0-8f17-7ef05672f9fb
+
+	measure 'OTIF m-1' =
+			
+			CALCULATE(
+			    [otif],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\OTIF
+		lineageTag: 2ec42163-82d5-4643-b69f-77815df26ac0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OTIF mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [otif],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([otif], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\OTIF
+		lineageTag: d13124e4-7f17-4590-8c2c-330db7efae0d
+
+	measure 'OTIF % - m-1' =
+			
+			
+			[OTIF mom %]&" | "&FORMAT([OTIF m-1], "0.0%")
+		displayFolder: Cartões Strings\OTIF
+		lineageTag: baac5ed6-35f8-4b44-8b8e-aa628294885e
+
+	measure 'OTIF string' =
+			
+			
+			FORMAT([otif], "0.0%")
+		displayFolder: Cartões Strings\OTIF
+		lineageTag: 35b987b9-fc02-4b00-a96e-391a15a9e5b8
+
+	measure 'setor selecionado' =
+			
+			
+			"Setor: "&SELECTEDVALUE(aux_setores[setores_1])&" | Modalidade: "&SELECTEDVALUE(aux_setores[setores])
+		displayFolder: Outros
+		lineageTag: 96bcccf1-e512-439f-ae5e-d9a160b6db71
+
+	measure 'otif on time m-1' =
+			
+			CALCULATE(
+			    [on_time],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\OTIF | OT
+		lineageTag: 8a08d709-4362-44e2-9b5b-c22c86c1b10e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OTIF on time mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [on_time],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([on_time], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\OTIF | OT
+		lineageTag: 854daee5-27ae-43be-a252-397526a67e34
+
+	measure 'OTIF on time% - m-1' =
+			
+			
+			[OTIF on time mom %]&" | "&FORMAT([otif on time m-1], "0.0%")
+		displayFolder: Cartões Strings\OTIF | OT
+		lineageTag: 495905c8-2a91-4c85-94af-55d1938397c1
+
+	measure 'OTIF on time string' =
+			
+			
+			FORMAT([on_time], "0.0%")
+		displayFolder: Cartões Strings\OTIF | OT
+		lineageTag: f5171355-f8b7-4937-8ed0-40538ccad8fa
+
+	measure 'otif in full m-1' =
+			
+			CALCULATE(
+			    [entrega_in_full],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\OTIF | IN
+		lineageTag: 38f75d86-35aa-4599-bc41-2332c649c38d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OTIF in full mom %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [entrega_in_full],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([entrega_in_full], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\OTIF | IN
+		lineageTag: 7a950d11-01ec-4d32-b2d0-94878dd4b5bb
+
+	measure 'OTIF in full % - m-1' =
+			
+			
+			[OTIF in full mom %]&" | "&FORMAT([otif in full m-1], "0.0%")
+		displayFolder: Cartões Strings\OTIF | IN
+		lineageTag: 7fa5c0ed-0c2c-4ea7-a5e0-f46e40f4bd86
+
+	measure 'OTIF in full string' =
+			
+			
+			FORMAT([entrega_in_full], "0.0%")
+		displayFolder: Cartões Strings\OTIF | IN
+		lineageTag: 8c2bfd4b-399f-4fdf-a652-b3a25c065c94
+
+	measure 'time lead picking mom cartão' =
+			
+			CALCULATE(
+			    [time_lead_picking],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Picking
+		lineageTag: cb9611bf-faba-4737-aeb4-3541c0b0890a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead picking mesclado' =
+			
+			
+			FORMAT([time_lead_picking_mom], "%0.0")&" | "&FORMAT([time lead picking mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Picking
+		lineageTag: 9b5de938-7eba-4c0b-ac3f-4a611d113e42
+
+	measure 'time lead picking string' =
+			
+			
+			FORMAT([time_lead_picking],"00:00:00")
+		displayFolder: Time Lead Operacional\Picking
+		lineageTag: 8c8d7305-ef2e-4a75-9f77-8eb5e9d1cc61
+
+	measure 'time lead packing mesclado' =
+			
+			
+			FORMAT([time_lead_pack_mom], "%0.0")&" | "&FORMAT([time lead packing mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Packing
+		lineageTag: 025bd691-fadc-4109-b3f5-117d85a9d3a3
+
+	measure 'time lead packing mom cartão' =
+			
+			CALCULATE(
+			    [time_lead_pack],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Packing
+		lineageTag: 291b8f18-5942-48ba-9e95-26c5f90c2ab0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead packing string' =
+			
+			
+			FORMAT([time_lead_pack],"00:00:00")
+		displayFolder: Time Lead Operacional\Packing
+		lineageTag: 36e3ec02-161e-4c0a-846d-4f55eaa4a057
+
+	measure 'time lead botleneck salao mesclado' =
+			
+			
+			FORMAT([bottleneck_salao_mom], "%0.0")&" | "&FORMAT([time lead bottleneck salao mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Bottleneck Galpão
+		lineageTag: f251054f-9acd-445c-9cb0-1e27e751d7bf
+
+	measure 'time lead bottleneck salao mom cartão' =
+			
+			CALCULATE(
+			    [bottleneck_salao],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Bottleneck Galpão
+		lineageTag: 86166dde-96b6-4862-8d6c-5894d3846f7d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead bottleneck salao string' =
+			
+			
+			FORMAT([bottleneck_salao],"00:00:00")
+		displayFolder: Time Lead Operacional\Bottleneck Galpão
+		lineageTag: 6fd95d3a-27db-42fb-a905-b9068c1c994e
+
+	measure 'time lead putaway mom cartão' =
+			
+			CALCULATE(
+			    [time_lead_putaway],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Putaway
+		lineageTag: 0dc92ede-f8cf-4399-be35-8771af006193
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead putaway mesclado' =
+			
+			
+			FORMAT([time_lead_putaway_mom], "%0.0")&" | "&FORMAT([time lead putaway mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Putaway
+		lineageTag: 17c286b1-3488-4737-8a86-f83114aadae0
+
+	measure 'time lead putaway string' =
+			
+			
+			FORMAT([time_lead_putaway],"00:00:00")
+		displayFolder: Time Lead Operacional\Putaway
+		lineageTag: 8b6b8c5d-4a36-4747-9319-18290cbb2f31
+
+	measure 'time lead loading mom cartão' =
+			
+			CALCULATE(
+			    [time_lead_load],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Conferencia
+		lineageTag: ec1462ea-3644-4196-90f5-ba959edae07b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead loading mesclado' =
+			
+			
+			FORMAT([time_lead_load_mom], "%0.0")&" | "&FORMAT([time lead loading mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Conferencia
+		lineageTag: 3b8aec94-4e66-4b37-af08-9ebf1450e82b
+
+	measure 'time lead loading string' =
+			
+			
+			FORMAT([time_lead_load],"00:00:00")
+		displayFolder: Time Lead Operacional\Conferencia
+		lineageTag: b1dafbc0-2c80-4e78-b027-5ae94316037b
+
+	measure 'time lead olpn mom cartão' =
+			
+			CALCULATE(
+			    [time_lead_olpn],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Time Lead Operacional
+		lineageTag: ef67d3af-8ae7-43d8-bf4b-5d43d33fbe03
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead olpn mesclado' =
+			
+			
+			FORMAT([time_lead_olpn_mom], "%0.0")&" | "&FORMAT([time lead olpn mom cartão],"00:00:00")
+		displayFolder: Time Lead Operacional\Time Lead Operacional
+		lineageTag: e48b84fb-eabe-4ca4-8225-598f84ea3693
+
+	measure 'time lead olpn string' =
+			
+			
+			FORMAT([time_lead_olpn],"00:00:00")
+		displayFolder: Time Lead Operacional\Time Lead Operacional
+		lineageTag: 6f332f70-af92-4057-b2ba-704052e9db05
+
+	measure 'time lead bottleneck box mom cartão' =
+			
+			CALCULATE(
+			    [bottleneck_box],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: 66336b38-330c-4396-836d-ca79c2c94e16
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'time lead botleneck box mesclado' =
+			
+			
+			FORMAT([bottleneck_box_mom], "%0.0")&" | "&FORMAT([time lead bottleneck box mom cartão], "00:00:00")
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: e2eff68e-0d8c-4031-aea8-10062e06a0d6
+
+	measure 'time lead bottleneck box string' =
+			
+			
+			FORMAT([bottleneck_box],"00:00:00")
+		displayFolder: Time Lead Operacional\Bottleneck Box
+		lineageTag: 3ad532b3-d833-447d-9370-b1c819edf875
+
+	measure 'h/h hora geral m-1' =
+			
+			CALCULATE(
+			    [produtividade_homem_hora_geral],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\H/H Geral
+		lineageTag: e2367dc5-310c-40b0-a2ff-51f110c569c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'h/h hora geral m-1 %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [produtividade_homem_hora_geral],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([produtividade_homem_hora_geral], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\H/H Geral
+		lineageTag: 25af616d-0648-47d1-bedf-dc74ebb7f73e
+
+	measure 'h/h hora geral mesclado' =
+			
+			
+			[h/h hora geral m-1 %]&" | "&FORMAT([h/h hora geral m-1], "#0.00")
+		displayFolder: Cartões Strings\H/H Geral
+		lineageTag: 7e5f3247-6095-4855-8891-fb9b79a92a35
+
+	measure 'h/h hora geral string' =
+			
+			
+			FORMAT([produtividade_homem_hora_geral], "#0.00")
+		displayFolder: Cartões Strings\H/H Geral
+		lineageTag: 59f655de-79c8-4765-8643-91a4d184d302
+
+	measure 'h/h hora loading m-1' =
+			
+			CALCULATE(
+			    [produtividade_homem_hora_load],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\H/H Loading
+		lineageTag: 7be9aba0-3626-4fc6-a206-3a67a1252a6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'h/h hora loading m-1 %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [produtividade_homem_hora_load],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([produtividade_homem_hora_load], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\H/H Loading
+		lineageTag: b11f1a37-e502-4210-bdc5-e758febad37a
+
+	measure 'h/h hora loading mesclado' =
+			
+			
+			[h/h hora loading m-1 %]&" | "&FORMAT([h/h hora loading m-1], "#0.00")
+		displayFolder: Cartões Strings\H/H Loading
+		lineageTag: 813acf7e-2409-4e66-92a8-6004df088daf
+
+	measure 'h/h hora loading string' =
+			
+			
+			FORMAT([produtividade_homem_hora_load], "#0.00")
+		displayFolder: Cartões Strings\H/H Loading
+		lineageTag: 726e4077-6f45-445e-a2a2-33e65109491b
+
+	measure 'h/h hora picking m-1' =
+			
+			CALCULATE(
+			    [produtividade_homem_hora_picking],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\H/H Picking
+		lineageTag: 6d239f8b-3513-4587-879b-cbe5b6a63a59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'h/h hora picking m-1 %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [produtividade_homem_hora_picking],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([produtividade_homem_hora_picking], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\H/H Picking
+		lineageTag: bc0579c7-17f5-456f-9b42-8d6e3ce903bf
+
+	measure 'h/h hora picking mesclado' =
+			
+			
+			[h/h hora picking m-1 %]&" | "&FORMAT([h/h hora picking m-1], "#0.00")
+		displayFolder: Cartões Strings\H/H Picking
+		lineageTag: 7989254a-a129-4235-9287-92af0a677ceb
+
+	measure 'h/h hora picking string' =
+			
+			
+			FORMAT([produtividade_homem_hora_picking], "#0.00")
+		displayFolder: Cartões Strings\H/H Picking
+		lineageTag: 21cc139b-a62f-4043-8614-aa0f68ac30cb
+
+	measure 'h/h hora putaway m-1' =
+			
+			CALCULATE(
+			    [produtividade_homem_hora_putaway],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\H/H Putaway
+		lineageTag: 9b40c271-9a77-48ff-85f7-8e34bf81883f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'h/h hora putaway m-1 %' = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [produtividade_homem_hora_putaway],
+			    DATEADD(d_calendario[Data], -1, MONTH))
+			
+			VAR B =
+			DIVIDE([produtividade_homem_hora_putaway], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\H/H Putaway
+		lineageTag: ea983cda-b40a-4142-a762-ced7ee7743b7
+
+	measure 'h/h hora putaway mesclado' =
+			
+			
+			[h/h hora putaway m-1 %]&" | "&FORMAT([h/h hora putaway m-1], "#0.00")
+		displayFolder: Cartões Strings\H/H Putaway
+		lineageTag: 4a040a7e-9ce6-44b9-8221-23cb07092b8f
+
+	measure 'h/h hora putaway string' =
+			
+			
+			FORMAT([produtividade_homem_hora_putaway], "#0.00")
+		displayFolder: Cartões Strings\H/H Putaway
+		lineageTag: f3cc0779-7912-45e9-9269-234b38c7f249
+
+	measure 'total pcs packed string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_packed]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Peças
+		lineageTag: e811b341-8f75-4001-816d-7ab68250ea1b
+
+	measure 'merge packed % - m-1' =
+			
+			
+			[qt_packed_mom]&" | "&FORMAT([quantidade packed m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Peças
+		lineageTag: 53d97a32-ca20-4db9-91a3-0deccc738604
+
+	measure 'quantidade packed m-1' =
+			
+			CALCULATE(
+			    [qt_packed],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Picking\Peças
+		lineageTag: 53b9089a-959e-4d93-bed0-28c00c4a9d59
+
+	measure 'quantidade pedidos picking m-1' =
+			
+			CALCULATE(
+			    [qt_pedido_picking],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Picking\Pedido\Total Pedidos
+		lineageTag: d0f0c05d-ddcd-409b-92f7-69231bbf1a44
+
+	measure 'total pedidos packed string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_pedido_picking]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Pedido\Total Pedidos
+		lineageTag: bdb8363a-88dd-4ad6-b349-f441d90e205f
+
+	measure qt_pedidos_packed_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_pedido_picking],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_picking], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Picking\Pedido\Total Pedidos
+		lineageTag: c0726cc7-c7dc-4ecd-9f84-3feff40925fc
+
+	measure 'merge pedidos packed % - m-1' =
+			
+			
+			[qt_pedidos_packed_mom]&" | "&FORMAT([quantidade pedidos picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Pedido\Total Pedidos
+		lineageTag: 5d9ffd9f-7c23-470a-9679-bdd05d274862
+
+	measure qt_media_picking_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_picking_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_picking_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Peças
+		lineageTag: 2c11c972-4b9b-4aaa-821f-28f22469853d
+
+	measure 'media picking m-1' =
+			
+			CALCULATE(
+			    [media_picking_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Picking\Média\Média Peças
+		lineageTag: a85ffa33-960d-431d-bd5f-bfa6808db94d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'media picking string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_picking_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Peças
+		lineageTag: b675ab5c-1178-46ff-8e6d-d3cd2915c4ad
+
+	measure 'merge média picking % - m-1' =
+			
+			
+			[qt_media_picking_mom]&" | "&FORMAT([media picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Média\Média Peças
+		lineageTag: 4d94ef3a-1225-4d4b-88bb-8c6a174dbcd0
+
+	measure qt_media_pedidos_picking_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_picking_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_picking_pedido_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Pedidos
+		lineageTag: ea81fa1d-53e9-421c-b41b-1906053ad41a
+
+	measure 'quantidade media pedidos picking m-1' =
+			
+			CALCULATE(
+			    [media_picking_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Picking\Média\Média Pedidos
+		lineageTag: 99364690-4ce2-480d-b245-a25470c49227
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'total media pedidos packed string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_picking_pedido_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Pedidos
+		lineageTag: 3a85ae86-47b8-4baa-983d-0b55568c10a1
+
+	measure 'merge media pedidos packed % - m-1' =
+			
+			
+			[qt_media_pedidos_picking_mom]&" | "&FORMAT([quantidade media pedidos picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Média\Média Pedidos
+		lineageTag: 130697af-aea6-4ee2-a0cd-1aaa03128da7
+
+	measure qt_media_pedidos_hora_picking_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_picking_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_picking_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Picking\Pedido\Média Hora
+		lineageTag: 0b93b40b-41dd-4101-b137-e99409fc7097
+
+	measure 'quantidade media pedidos horas picking m-1' =
+			
+			CALCULATE(
+			    [media_picking_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Picking\Pedido\Média Hora
+		lineageTag: f5a47ac3-36bf-4a82-a75b-1684176d2a9b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'merge media pedidos hora packed % - m-1' =
+			
+			
+			[qt_media_pedidos_hora_picking_mom]&" | "&FORMAT([quantidade media pedidos horas picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Pedido\Média Hora
+		lineageTag: 8e2132bb-1ade-47bd-9e8e-d5270d85261f
+
+	measure 'total media pedidos horas packed string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_picking_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Pedido\Média Hora
+		lineageTag: 020396c2-b793-4105-82a8-e9ec4ad70906
+
+	measure 'media pedidos hora m-1' =
+			
+			CALCULATE(
+			    [media_picking_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Picking\Média\Média Pedido Hora
+		lineageTag: 35d662da-4368-4ac2-9056-f46312926800
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure qt_media_picking_pedido_hora_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_picking_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_picking_pedido_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Pedido Hora
+		lineageTag: 6f437b7d-8380-45f4-a92c-9fa737ef33f6
+
+	measure 'merge média pedido hora picking % - m-1' =
+			
+			
+			[qt_media_picking_pedido_hora_mom]&" | "&FORMAT([media pedidos hora m-1], "#,##0")
+		displayFolder: Cartões Strings\Picking\Média\Média Pedido Hora
+		lineageTag: b1470a2c-dcd6-4433-85e4-1d3760d0d011
+
+	measure 'media picking pedido hora string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_picking_pedido_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Picking\Média\Média Pedido Hora
+		lineageTag: efe03b6c-26a9-45a4-a3ea-fecdd55a291e
+
+	measure qt_pcs_media_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_packing_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_packing_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Peças
+		lineageTag: 9ac2f3ac-7650-49b0-b3c5-0510d188f9e8
+
+	measure 'quantidade pcs media picking m-1' =
+			
+			CALCULATE(
+			    [media_packing_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Packing\Média\Média Peças
+		lineageTag: 9466046d-7679-479d-b466-a9869782bddb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'merge pcs media packing % - m-1' =
+			
+			
+			[qt_pcs_media_packing_mom]&" | "&FORMAT([quantidade pcs media picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Média\Média Peças
+		lineageTag: b27f3222-d308-463b-b09b-ad7e3cf19d70
+
+	measure 'total pcs media packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_packing_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Peças
+		lineageTag: 4f4230d2-2071-4f9e-917f-7c70f24ad6a3
+
+	measure qt_pedidos_media_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_packing_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_packing_pedido_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos
+		lineageTag: fff323e3-01bb-43a8-958e-bbe80b46f94c
+
+	measure 'quantidade pedidos media picking m-1' =
+			
+			CALCULATE(
+			    [media_packing_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos
+		lineageTag: 0ffb753d-6c7c-4fbc-9320-c97b87fe93dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'merge pedidos packing % - m-1' =
+			
+			
+			[qt_pedidos_media_packing_mom]&" | "&FORMAT([quantidade pedidos media picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos
+		lineageTag: 7e23ac4b-5e27-4ac8-bd30-65c28c309b41
+
+	measure 'total pedidos media packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_packing_pedido_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos
+		lineageTag: 43719fa8-9571-4624-a748-c6f62a2be703
+
+	measure qt_pcs_media_hora_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_packing_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_packing_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Peças Horas
+		lineageTag: 9ad75438-3e78-458f-8b4f-fe7110ab3f3c
+
+	measure 'quantidade pcs media hora picking m-1' =
+			
+			CALCULATE(
+			    [media_packing_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Packing\Média\Média Peças Horas
+		lineageTag: aad19c17-9e08-4a59-a0d5-722866a6e70d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'merge media pcs horas packing % - m-1' =
+			
+			
+			[qt_pcs_media_hora_packing_mom]&" | "&FORMAT([quantidade pcs media hora picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Média\Média Peças Horas
+		lineageTag: b8db199e-b5dd-42e7-812a-f50e851b3f52
+
+	measure 'total pedidos media hora packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_packing_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Peças Horas
+		lineageTag: a4af17ef-9368-489e-b66d-716a673d5539
+
+	measure qt_pedido_hora_media_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_packing_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_packing_pedido_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos Horas
+		lineageTag: c2346300-291e-4ef2-ab0c-d8b82506e091
+
+	measure 'quantidade pedido hora media picking m-1' =
+			
+			CALCULATE(
+			    [media_packing_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos Horas
+		lineageTag: c659b0c6-f9e2-446f-aad0-f605fa89d17f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'total pedido hora packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_packing_pedido_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos Horas
+		lineageTag: 3861b87d-bee6-4eac-af0a-56dc2cfc91aa
+
+	measure 'merge pedido hora packing % - m-1' =
+			
+			
+			[qt_pedido_hora_media_packing_mom]&" | "&FORMAT([quantidade pedido hora media picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Média\Média Pedidos Horas
+		lineageTag: d9fa3e92-8f8e-416c-b6be-713ad9396fd1
+
+	measure qt_pcs_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_packing],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_packing], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Packing
+		lineageTag: 8349e734-2e8b-4fae-8069-2cd2d3ee07ce
+
+	measure 'quantidade pcs picking m-1' =
+			
+			CALCULATE(
+			    [qt_packing],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Packing
+		lineageTag: 3d073e99-34f3-4043-89a3-577f5a62deaf
+
+	measure 'merge pcs packing % - m-1' =
+			
+			
+			[qt_pcs_packing_mom]&" | "&FORMAT([quantidade pcs picking m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Packing
+		lineageTag: 8614ce95-ae86-4db3-b9e2-809ea38389b5
+
+	measure 'total pcs packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_packing]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Packing
+		lineageTag: d5e4b952-6b68-4f53-9dc1-90fbce7c6ba2
+
+	measure qt_pedido_packing_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_pedido_packing],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_packing], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Pedidos
+		lineageTag: ced75c42-d4cc-4267-b4d8-4c2a1cbbc33c
+
+	measure 'quantidade pedidos packing m-1' =
+			
+			CALCULATE(
+			    [qt_pedido_packing],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Pedidos
+		lineageTag: d626974b-134c-497d-bf89-858f038a2da2
+
+	measure 'qt pedidos packing % - m-1' =
+			
+			
+			[qt_pedido_packing_mom]&" | "&FORMAT([quantidade pedidos packing m-1], "#,##0")
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Pedidos
+		lineageTag: 66ae43da-998e-4748-ba46-f3fd7bedfc83
+
+	measure 'total pedidos packing string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_pedido_packing]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Packing\Peças\Quantidade Pedidos
+		lineageTag: 08249b7f-b33d-4ec5-96d3-4dfde791021f
+
+	measure 'media loading m-1' =
+			
+			CALCULATE(
+			    [media_loaded_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Loading\Média\Média Peças
+		lineageTag: d28e2068-b58b-4352-bb1d-331e3a555466
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure qt_media_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_loaded_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_loaded_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Peças
+		lineageTag: 05c826ab-d21d-4069-857e-addc91a92395
+
+	measure 'merge media loading % - m-1' =
+			
+			
+			[qt_media_loading_mom]&" | "&FORMAT([media loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Média\Média Peças
+		lineageTag: b998bc9c-84ac-481d-afe2-1561915d0760
+
+	measure 'media loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_loaded_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Peças
+		lineageTag: adf9609e-e489-41a6-bba5-bdbd72a7c50c
+
+	measure 'quantidade media pedidos loading m-1' =
+			
+			CALCULATE(
+			    [media_load_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos
+		lineageTag: e43f6cc1-2d42-4267-94ea-3d7a5be1e156
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure qt_media_pedidos_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_load_pedido_diarizado],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_load_pedido_diarizado], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos
+		lineageTag: b5f46643-4dc2-4ca9-ba7e-dcfd33cffea0
+
+	measure 'merge media pedidos loading % - m-1' =
+			
+			
+			[qt_media_pedidos_loading_mom]&" | "&FORMAT([quantidade media pedidos loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos
+		lineageTag: 97afc6cd-f079-41f9-909d-e30cce8ea59f
+
+	measure 'total media pedidos loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_load_pedido_diarizado]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos
+		lineageTag: 41eb8915-df00-4372-88c1-71fe16716b85
+
+	measure qt_pcs_media_hora_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_load_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_load_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Peças Horas
+		lineageTag: 6a215358-d0aa-4524-99d2-a855c6cbbcc0
+
+	measure 'quantidade pcs media hora loading m-1' =
+			
+			CALCULATE(
+			    [media_load_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Loading\Média\Média Peças Horas
+		lineageTag: 756c2bc4-820d-4caa-a1ca-0f07bfa4a217
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'total pedidos media hora loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_load_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Peças Horas
+		lineageTag: e94ab341-32bb-447e-a331-692901d585c7
+
+	measure 'merge media pcs horas loading % - m-1' =
+			
+			
+			[qt_pcs_media_hora_loading_mom]&" | "&FORMAT([quantidade pcs media hora loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Média\Média Peças Horas
+		lineageTag: 5ed4f210-4bcf-4389-bb27-57a362b776ec
+
+	measure qt_pedido_hora_media_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [media_load_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [media_load_pedido_hora], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos Horas
+		lineageTag: 08d385c9-545c-42e0-9e1f-949f6392375e
+
+	measure 'quantidade pedido hora media loading m-1' =
+			
+			CALCULATE(
+			    [media_load_pedido_hora],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos Horas
+		lineageTag: 609a387d-303c-4b58-8ec3-1fbf60bdc685
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'total pedido hora loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[media_load_pedido_hora]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos Horas
+		lineageTag: 0376dae2-6341-4bea-8a8f-78acf65939d1
+
+	measure 'merge pedido hora loading % - m-1' =
+			
+			
+			[qt_pedido_hora_media_loading_mom]&" | "&FORMAT([quantidade pedido hora media loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Média\Média Pedidos Horas
+		lineageTag: 8e5aba94-b2a1-4396-b749-b8a84d3249c9
+
+	measure 'quantidade pcs loading m-1' =
+			
+			CALCULATE(
+			    [qt_loaded],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Loading
+		lineageTag: 398c482f-c520-471a-8a8d-c74d69cfb03b
+
+	measure qt_pcs_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_loaded],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_loaded], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Loading
+		lineageTag: 6a58c949-209c-4682-b077-e888d7762fa6
+
+	measure 'merge pcs loading % - m-1' =
+			
+			
+			[qt_pcs_loading_mom]&" | "&FORMAT([quantidade pcs loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Loading
+		lineageTag: f1c2a59b-3711-4f4f-ae38-c9fa50ae3f0b
+
+	measure 'total pcs loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_loaded]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Loading
+		lineageTag: b28c3771-4d31-4632-ae03-de02944b3f08
+
+	measure qt_pedido_loading_mom = ```
+			
+			
+			VAR A = 
+			CALCULATE(
+			    [qt_pedido_load],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+			
+			VAR B =
+			DIVIDE(
+			    [qt_pedido_load], A) -1
+			
+			VAR C =
+			SWITCH(
+			    TRUE(),
+			    B >= 0, "🔺"&FORMAT(B,"0.0%"),
+			    B = -1, BLANK(),
+			    B <= 0, "🔻"&FORMAT(B,"0.0%"))
+			
+			RETURN
+			C
+			```
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Pedidos
+		lineageTag: e69f0ef0-d2bc-460e-8e36-bf8910d6cdaa
+
+	measure 'quantidade pedidos loading m-1' =
+			
+			CALCULATE(
+			    [qt_pedido_load],
+			    DATEADD(
+			        d_calendario[Data], - 1, MONTH))
+		formatString: 0
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Pedidos
+		lineageTag: e42307ec-421a-42d3-b3d9-1ba452106542
+
+	measure 'qt pedidos loading % - m-1' =
+			
+			
+			[qt_pedido_loading_mom]&" | "&FORMAT([quantidade pedidos loading m-1], "#,##0")
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Pedidos
+		lineageTag: a82e2468-0604-4a9e-aca4-f3dc7b7e47ce
+
+	measure 'total pedidos loading string' = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_pedido_load]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			RETURN
+			vTotal_vendas_formatada
+			```
+		displayFolder: Cartões Strings\Loading\Peças\Quantidade Pedidos
+		lineageTag: 16da94a3-651f-45e9-bc35-728eeaa6b1cd
+
+	measure soma_capacidade =
+			
+			SUM(capacity_1200[Capacity])
+		formatString: 0
+		displayFolder: Análise Prescritiva\Capacidade
+		lineageTag: af3bca9e-57b9-472b-83cb-26404c3949da
+
+	measure cor_coluna =
+			
+			
+			IF([qt_movimentada_din_user] > [soma_capacidade],
+			"#850000",
+			"#12239E")
+		lineageTag: 021653a4-bd2f-4805-bf5a-88c451366f02
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: c13e1d71-48a7-46c5-8c99-0ea4a674d311
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

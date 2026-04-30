@@ -1,0 +1,36 @@
+table aux_hora
+	excludeFromModelRefresh
+	lineageTag: 06749698-b5ba-4c00-9bae-5acf081aac21
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 06ac0751-ec30-4418-bedd-275b8b38dd0e
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column turno
+		dataType: string
+		lineageTag: 54a24810-72ec-48a0-8633-ab7ff6086ed2
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_hora = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("ddG9DYAgFEXhVQi1Be+B/DiHHWEFTUxcztLJNMYCipPc7uvOrdU6t3wzxk7W35dZz2PbbZteEiZl8kyBaWaKHclIiSkzFSRxTMKkTJ4pMPU1dKTIlJgyU0FSxyRMyvTXGD9uDw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [hora = _t, turno = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"hora", type time}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

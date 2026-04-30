@@ -1,0 +1,25 @@
+table aux_local_cd
+	excludeFromModelRefresh
+	lineageTag: f5479b9d-5600-49c4-96ca-52c91958938d
+
+	column localizacao
+		dataType: string
+		lineageTag: 5e3904bc-1137-4eb2-a88a-ca718217e307
+		summarizeBy: none
+		sourceColumn: localizacao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aux_local_cd = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCk7MScxXitWJVgrQc9QLUoqNBQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [localizacao = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"localizacao", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

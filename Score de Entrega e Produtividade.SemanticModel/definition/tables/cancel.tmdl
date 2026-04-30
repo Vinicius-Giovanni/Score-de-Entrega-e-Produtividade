@@ -1,0 +1,80 @@
+table cancel
+	lineageTag: 321cf3df-50d5-4f36-96c9-77cdd299fe78
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: e83ba4c0-755e-4217-8138-0e81c43b7daf
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_pecas
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c9c3160-8d20-48a7-83b9-b3b2eea8042d
+		summarizeBy: sum
+		sourceColumn: qt_pecas
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: 63ac0b58-708c-4d8b-bbee-cdc39f032e3e
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column motivo_cancelamento
+		dataType: string
+		lineageTag: f09a9033-7052-445f-b47d-c8d88879ac0b
+		summarizeBy: none
+		sourceColumn: motivo_cancelamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: 4f084703-72ed-4515-8303-87be75f4fb63
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column motivo_descricao
+		dataType: string
+		lineageTag: d198e144-c8b5-4456-98a6-5dad8197b356
+		summarizeBy: none
+		sourceColumn: motivo_descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 35c08718-071f-45c6-9764-0ef0fd045eda
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition cancel = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"29401d62-794d-467a-a0ec-4f3b9a6ae5dc" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="29401d62-794d-467a-a0ec-4f3b9a6ae5dc"]}[Data],
+				    df_banco_de_dados_cancel_eficiencia_operacional_ = #"29401d62-794d-467a-a0ec-4f3b9a6ae5dc"{[entity="df_banco_de_dados_cancel_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_cancel_eficiencia_operacional_,{"pedido", "item", "data_cancelamento", "motivo_codigo", "hora"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

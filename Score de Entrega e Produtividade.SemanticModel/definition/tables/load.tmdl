@@ -1,0 +1,102 @@
+table load
+	lineageTag: 40219c67-a3e6-4d4e-b93c-4a5866114e63
+
+	column pedido
+		dataType: int64
+		formatString: 0
+		lineageTag: a8b03509-37c2-4f77-b025-fd02497ed503
+		summarizeBy: sum
+		sourceColumn: pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: da938bbc-c268-4b25-86da-9f33e11412ec
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: d7540a1d-3c1d-4d99-a740-d4d681611e25
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_pecas
+		dataType: int64
+		formatString: 0
+		lineageTag: 95b3285e-7466-4226-9b48-c29c7573353d
+		summarizeBy: sum
+		sourceColumn: qt_pecas
+
+		annotation SummarizationSetBy = Automatic
+
+	column box
+		dataType: int64
+		formatString: 0
+		lineageTag: 20949c18-a9fa-4a3a-a338-554318781ca6
+		summarizeBy: sum
+		sourceColumn: box
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_segundos_box_dia
+		dataType: int64
+		formatString: 0
+		lineageTag: fd4ecabc-3b42-4ae2-bfc1-2eda6b0b54f6
+		summarizeBy: sum
+		sourceColumn: duracao_segundos_box_dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: be859885-d5eb-4cd5-b177-19c1e4147725
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 39a25e3f-2605-48db-af8e-2f39190c88bf
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 5d642ddb-df66-48e4-84ac-5c99b178bcca
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition load = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"ed291a65-b0e9-4d5d-b12a-b77d878cf86e" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="ed291a65-b0e9-4d5d-b12a-b77d878cf86e"]}[Data],
+				    df_banco_de_dados_loaded_eficiencia_operacional_ = #"ed291a65-b0e9-4d5d-b12a-b77d878cf86e"{[entity="df_banco_de_dados_loaded_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_loaded_eficiencia_operacional_,{"olpn", "data_pedido", "data_hora_load", "item"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

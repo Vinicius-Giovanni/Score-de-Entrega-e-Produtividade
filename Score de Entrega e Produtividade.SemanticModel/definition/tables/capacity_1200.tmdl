@@ -1,0 +1,50 @@
+table capacity_1200
+	lineageTag: adb6d2d3-6ec4-4814-8850-5fd412073d49
+
+	column Setores
+		dataType: string
+		lineageTag: 12ae874c-0471-474f-8fba-e192d48e3390
+		summarizeBy: none
+		sourceColumn: Setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capacity
+		dataType: int64
+		formatString: #,0
+		lineageTag: e756072d-6b34-4820-b2d9-083cc43cbb99
+		summarizeBy: sum
+		sourceColumn: Capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition capacity_1200 = m
+		mode: import
+		source = ```
+				let
+				    // Conectar ao SharePoint
+				    Origem = SharePoint.Files("https://viavarejo.sharepoint.com/sites/grupo_de_dados_wave", [ApiVersion = 15]),
+				
+				    // Filtrar apenas arquivos .xlsx no caminho correto e não ocultos
+				    ArquivosFiltrados = Table.SelectRows(Origem, each 
+				        Text.Contains([Folder Path], "banco_de_dados_operacional/capacity_1200") and
+				        Text.EndsWith(Text.Lower([Name]), "capacity.xlsx") and
+				        ([Attributes]?[Hidden]? <> true)
+				    ),
+				
+				    // Obter conteúdo do primeiro arquivo correspondente
+				    ConteudoArquivo = ArquivosFiltrados{0}[Content],
+				
+				    // Ler a planilha "Planilha1"
+				    Planilha = Excel.Workbook(ConteudoArquivo),
+				    DadosPlanilha1 = Planilha{[Item="Planilha1", Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(DadosPlanilha1, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Setores", type text}, {"Capacity", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

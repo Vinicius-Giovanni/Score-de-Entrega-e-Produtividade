@@ -1,0 +1,42 @@
+table desvio_padrao
+	lineageTag: 4ee93894-be1a-4ff0-ba88-e3b5608c7c34
+
+	column data_criterio
+		formatString: General Date
+		lineageTag: 289a6a03-07f3-4d16-b370-bcc12e9ab93b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: olpn[data_criterio]
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		lineageTag: 7a3a57f8-0396-4dec-9c11-ec0bea36c699
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: olpn[setores]
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtd_pecas
+		formatString: 0
+		lineageTag: b0a92321-ae6e-436c-9830-a2fa779fde98
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [qtd_pecas]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition desvio_padrao = calculated
+		mode: import
+		source =
+				
+				SUMMARIZE(
+				    olpn,
+				    olpn[data_criterio],
+				    olpn[setores],
+				    "qtd_pecas",
+				    SUM(olpn[qt_pecas]))
+
+	annotation PBI_Id = 91d39610f4cf49fe8d3b6ff4f5aad9bb
+

@@ -1,0 +1,193 @@
+relationship 3331572e-3389-be5c-bcb7-35f87acf85bc
+	fromColumn: olpn.desc_setor_item
+	toColumn: aux_departamento.desc_setor_item
+
+relationship 32c3eb34-22c8-1aff-0443-314e35133d35
+	fromColumn: picking.desc_setor_item
+	toColumn: aux_departamento.desc_setor_item
+
+relationship 59354464-7e88-9d36-fccd-01bcaf587266
+	fromColumn: putaway.desc_setor_item
+	toColumn: aux_departamento.desc_setor_item
+
+relationship 814906de-a612-cd63-7e72-729518ef2263
+	fromColumn: olpn.localizacao
+	toColumn: aux_local_cd.localizacao
+
+relationship ca6df71f-e097-c74c-d1fb-20672759c064
+	fromColumn: picking.localizacao
+	toColumn: aux_local_cd.localizacao
+
+relationship 883bd0af-f21a-e498-031b-7b563d6db983
+	fromColumn: load.setores
+	toColumn: aux_setores.setores
+
+relationship 92729b55-05b1-e826-1b85-36660c77f1e0
+	fromColumn: olpn.setores
+	toColumn: aux_setores.setores
+
+relationship 9d7d7427-3d8d-3450-38ed-79e01d752ddc
+	fromColumn: putaway.setores
+	toColumn: aux_setores.setores
+
+relationship a5511c19-1226-0e85-5894-4a21b10c7659
+	fromColumn: picking.setores
+	toColumn: aux_setores.setores
+
+relationship 44158d09-971d-7b02-be5a-49dd8b8651ab
+	fromColumn: desvio_padrao.setores
+	toColumn: aux_setores.setores
+
+relationship 96914abb-5563-adbb-4984-a4ea23cc6cf6
+	fromColumn: cancel.setores
+	toColumn: aux_setores.setores
+
+relationship 868ad030-da3c-0fb4-e727-ae9bb30c152b
+	fromColumn: cancel.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship fd7b9823-66c9-17ab-6c58-c643af97d5c3
+	fromColumn: load.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship 8f2b411e-2fb8-bd90-0240-4b38716aed83
+	fromColumn: olpn.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship 0651f14a-a9c4-5027-f2d4-adda775af9a0
+	fromColumn: picking.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship f2c9c43c-d07f-c78c-83c0-19b2fc1eae70
+	fromColumn: putaway.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship 61471278-07f4-b741-64f9-3990baac54cf
+	fromColumn: cancel.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 028cb747-1eea-afd2-5922-b6957baeba15
+	fromColumn: desvio_padrao.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 4649becf-089c-f236-4c62-9b5987332a89
+	fromColumn: jornada.data_criterio
+	toColumn: d_calendario.Data
+
+relationship ae65b98a-4cac-1d38-ad7d-27db16fd3cfb
+	fromColumn: load.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 87eeb509-dd6e-f5e5-1220-64f204e191fc
+	fromColumn: olpn.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 65df3428-ff99-3929-78c2-2bf5ffb598ea
+	fromColumn: picking.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 4ad46183-03c8-a67c-6d2f-3091e68f8e79
+	fromColumn: putaway.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 5659b932-7ee3-674d-1171-6bb9b7183bf1
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: putaway.olpn
+	toColumn: bottleneck_box.olpn
+
+relationship 036b6290-40c4-4c56-f409-e3386eebdd5c
+	crossFilteringBehavior: bothDirections
+	fromColumn: picking.olpn
+	toColumn: bottleneck_galpao.olpn
+
+relationship 54ad2134-b38a-fc46-e85e-a767f98acfdc
+	fromColumn: olpn.box
+	toColumn: aux_box.box
+
+relationship 966e029f-09d1-d8f8-69dc-576f2be110ac
+	fromColumn: cancel.usuario
+	toColumn: usuarios.User
+
+relationship df7e0c9a-1192-1562-cb49-60f1c22feb85
+	fromColumn: load.usuario
+	toColumn: usuarios.User
+
+relationship c1cb3aa1-7107-4905-bb46-65fc6bed4762
+	fromColumn: picking.usuario
+	toColumn: usuarios.User
+
+relationship 085157cf-b978-a344-0196-0a9fd7eaf794
+	fromColumn: putaway.usuario
+	toColumn: usuarios.User
+
+relationship fd618387-3ef2-a02a-9d0a-c67d3b8fe161
+	fromColumn: jornada.login
+	toColumn: usuarios.User
+
+relationship 3171a4e2-a26a-bb8f-5bf7-623c1e6f9af0
+	fromColumn: olpn.local_de_picking
+	toColumn: aux_zona.local
+
+relationship 94364fb8-509e-eee0-06dc-c23958c31406
+	fromColumn: picking.local_de_picking
+	toColumn: aux_zona.local
+
+relationship bac688e9-4992-b4bf-eb57-fc43714f37ed
+	crossFilteringBehavior: bothDirections
+	fromColumn: picking.olpn
+	toColumn: time_lead_olpn.olpn
+
+relationship 31ddc3c1-4b05-62dd-4db3-b3a3b774310f
+	isActive: false
+	fromColumn: time_lead_olpn.diferenca_segundos
+	toColumn: aux_on_time.segundos
+
+relationship 28129e5f-4e31-61ec-e189-e698ff678849
+	fromColumn: load.hora
+	toColumn: aux_hora.hora
+
+relationship 109c69e8-614c-123c-0123-051dfe336ea5
+	fromColumn: picking.hora
+	toColumn: aux_hora.hora
+
+relationship e3453508-ca03-779b-8bef-3b620e7b1874
+	fromColumn: putaway.hora
+	toColumn: aux_hora.hora
+
+relationship 5e0f2d4b-cc91-519a-3d89-ae220b44747b
+	fromColumn: packing.box
+	toColumn: aux_box.box
+
+relationship 55f9647f-ced2-7d17-47f6-2ce194a83718
+	fromColumn: packing.desc_setor_item
+	toColumn: aux_departamento.desc_setor_item
+
+relationship 62de2f96-f646-4c14-5f76-09883d33b285
+	fromColumn: packing.hora
+	toColumn: aux_hora.hora
+
+relationship bb5a04bf-3602-0eaf-5e97-236ad86cd49a
+	fromColumn: packing.setores
+	toColumn: aux_setores.setores
+
+relationship b201324e-a673-51b9-54a1-ae67db28d81b
+	fromColumn: packing.tipo_de_pedido
+	toColumn: aux_tpedido.tipo_de_pedido
+
+relationship 252ebfab-52b0-5db8-5798-e3a3fd1b59b2
+	fromColumn: packing.usuario
+	toColumn: usuarios.User
+
+relationship 6c087efa-db74-1b46-1903-948f60a38e1b
+	fromColumn: packing.data_criterio
+	toColumn: d_calendario.Data
+
+relationship 5bd038dc-d22e-baa4-5d00-3f4e07bcf797
+	fromColumn: capacity_1200.Setores
+	toColumn: aux_setores.setores
+
+relationship 2a79491a-d2b2-0abf-a7be-60661e28a748
+	fromColumn: olpn.hora
+	toColumn: aux_hora.hora
+

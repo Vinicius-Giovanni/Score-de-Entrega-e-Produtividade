@@ -1,0 +1,151 @@
+table picking
+	lineageTag: 200c48a6-6c3b-4f15-adcc-de6830e9017b
+
+	column tarefa
+		dataType: string
+		lineageTag: cc9daca3-e31b-4118-871e-954781a3f95d
+		summarizeBy: none
+		sourceColumn: tarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_requerida
+		dataType: int64
+		formatString: 0
+		lineageTag: b7e688a9-4222-4344-86ed-fbf26921896a
+		summarizeBy: sum
+		sourceColumn: qt_requerida
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_separada
+		dataType: int64
+		formatString: 0
+		lineageTag: 16a5823c-b29c-4ae2-81ba-4a9596ebc4ae
+		summarizeBy: sum
+		sourceColumn: qt_separada
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: 36b08462-a0a0-43b2-99cd-29fef3fe8491
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column pedido
+		dataType: int64
+		formatString: 0
+		lineageTag: 201e1b4c-e717-4f46-b111-8268b92b54ca
+		summarizeBy: sum
+		sourceColumn: pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column olpn
+		dataType: string
+		lineageTag: d81401db-8535-4efe-aa06-d499f0bef423
+		summarizeBy: none
+		sourceColumn: olpn
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_setor_item
+		dataType: string
+		lineageTag: 45849db5-a1a5-4476-b79b-9121571f2777
+		summarizeBy: none
+		sourceColumn: desc_setor_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: 6f181b09-4d0a-4666-9547-b6c3edc8bf77
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column local_de_picking
+		dataType: string
+		lineageTag: a185f8e5-c4c5-4e46-aed0-f8bbc9cac9b9
+		summarizeBy: none
+		sourceColumn: local_de_picking
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_tarefa_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: a5996b92-12ab-4e72-8422-20988dcd894b
+		summarizeBy: sum
+		sourceColumn: duracao_tarefa_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_olpn_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dac12a3-e222-4955-9307-a15001171b43
+		summarizeBy: sum
+		sourceColumn: duracao_olpn_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: 5504da45-3b1a-4c7c-a078-02073cb56d2c
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column localizacao
+		dataType: string
+		lineageTag: dfba4889-e40a-456b-95ca-93b8a67e540b
+		summarizeBy: none
+		sourceColumn: localizacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7db79b74-ac88-487a-81a9-a057d2dc4d03
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 19bd7e64-0821-4361-8a60-b1d62270aade
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition picking = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"bf0cbe2b-aec3-4ae4-85fe-539d1de4224a" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="bf0cbe2b-aec3-4ae4-85fe-539d1de4224a"]}[Data],
+				    df_banco_de_dados_packed_eficiencia_operacional_ = #"bf0cbe2b-aec3-4ae4-85fe-539d1de4224a"{[entity="df_banco_de_dados_packed_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_packed_eficiencia_operacional_,{"data_hora_fim_olpn", "item", "box", "rua", "endereco", "nivel"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

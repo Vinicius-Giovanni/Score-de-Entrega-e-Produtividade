@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Score de Entrega e Produtividade"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "66ce514b-e9f1-41df-9a92-a8b52088b0cd"
+  }
+}

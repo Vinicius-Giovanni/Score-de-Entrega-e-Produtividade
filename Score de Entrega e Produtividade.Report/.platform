@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Score de Entrega e Produtividade"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bd506580-8843-4ad4-a762-efcfa74fc871"
+  }
+}

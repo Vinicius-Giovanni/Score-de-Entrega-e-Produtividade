@@ -1,0 +1,116 @@
+table packing
+	lineageTag: 56a22ffa-c2cd-4c1e-95f7-ddb4ed6def3f
+
+	column pedido
+		dataType: string
+		lineageTag: 4e62f025-e04a-496e-8b70-7d9bccf9fe1c
+		summarizeBy: none
+		sourceColumn: pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_setor_item
+		dataType: string
+		lineageTag: eacc4456-51f0-439f-81ab-b705aa22ce6d
+		summarizeBy: none
+		sourceColumn: desc_setor_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: ee1c9e05-6ec7-44f3-b2ba-6ddbf22108c4
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: 817a46af-82e2-4b32-9afe-31e012120029
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_pecas
+		dataType: int64
+		formatString: 0
+		lineageTag: 89f19f12-ed87-4ef9-b391-40627dd76014
+		summarizeBy: sum
+		sourceColumn: qt_pecas
+
+		annotation SummarizationSetBy = Automatic
+
+	column box
+		dataType: string
+		lineageTag: b17c5f09-89d6-46c8-b78f-05736bac5cd9
+		summarizeBy: none
+		sourceColumn: box
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: a034d6af-7bf2-4748-8530-e5eed9de225a
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 915b2598-4953-4d41-bdf6-8d2bfe424db9
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5676e52f-63f1-486e-8bb4-4d14bcf23574
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column tote
+		dataType: string
+		lineageTag: dd3f5fe1-787f-4c56-8a21-7da1af1ae5c1
+		summarizeBy: none
+		sourceColumn: tote
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_segundos_tote_dia
+		dataType: int64
+		formatString: 0
+		lineageTag: b4957d9a-32c2-43d4-a749-aa2537fe83b2
+		summarizeBy: sum
+		sourceColumn: duracao_segundos_tote_dia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition packing = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows([]),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"d3a83881-143f-4041-abae-2ab099a200c6" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="d3a83881-143f-4041-abae-2ab099a200c6"]}[Data],
+				    df_banco_de_dados_packed_v2_eficiencia_operacional_ = #"d3a83881-143f-4041-abae-2ab099a200c6"{[entity="df_banco_de_dados_packed_v2_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_packed_v2_eficiencia_operacional_,{"olpn", "item", "data_hora_packed", "duracao_segundos_box_dia"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

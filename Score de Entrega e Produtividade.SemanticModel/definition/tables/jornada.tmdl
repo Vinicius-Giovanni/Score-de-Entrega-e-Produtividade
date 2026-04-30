@@ -1,0 +1,48 @@
+table jornada
+	lineageTag: 5efb050f-e39e-4299-a281-cef179e21cf1
+
+	column jornada_segundos
+		dataType: int64
+		formatString: 0
+		lineageTag: 1bdf704b-7dfc-41f6-b308-513b56b737c5
+		summarizeBy: sum
+		sourceColumn: jornada_segundos
+
+		annotation SummarizationSetBy = Automatic
+
+	column login
+		dataType: string
+		lineageTag: ce6f2ff3-db95-4a87-8d09-ddf80f88d4bd
+		summarizeBy: none
+		sourceColumn: login
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f6f976f6-6c18-4a6c-97c9-7c8f00f01f3b
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition jornada = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"4262f891-8b0a-4b6c-959d-4cb0ba5cbf94" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="4262f891-8b0a-4b6c-959d-4cb0ba5cbf94"]}[Data],
+				    df_banco_de_dados_jornada_ = #"4262f891-8b0a-4b6c-959d-4cb0ba5cbf94"{[entity="df_banco_de_dados_jornada",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_jornada_,{"data", "matricula", "cod", "hora", "cargo", "gestor", "nome", "matricula_formatada"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,43 @@
+table aux_update
+	lineageTag: 1e95f9d2-67c8-4de9-b8d5-86ff8a8b6bba
+
+	column data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2f58712c-3a24-4832-830b-5d17b96ceadc
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 04a07242-84d3-4193-a1b3-19efb12930cb
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition aux_update = m
+		mode: import
+		source =
+				let
+				    Fonte = DateTime.From(DateTime.LocalNow()) - #duration(0, 3, 0, 0),
+				    #"Convertido para Tabela" = #table(1, {{Fonte}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Convertido para Tabela",{{"Column1", "hora"}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"hora", type datetime}}),
+				  #"Hora inserida" = Table.AddColumn(#"Tipo Alterado", "Hora (2)", each DateTime.Time([hora]), type nullable time),
+				  #"Data calculada" = Table.TransformColumns(#"Hora inserida", {{"hora", each DateTime.Date(_), type nullable date}}),
+				  #"Colunas renomeadas 1" = Table.RenameColumns(#"Data calculada", {{"hora", "data"}, {"Hora (2)", "hora"}})
+				in
+				    #"Colunas renomeadas 1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

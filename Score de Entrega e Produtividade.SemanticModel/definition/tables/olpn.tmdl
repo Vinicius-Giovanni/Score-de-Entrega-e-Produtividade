@@ -1,0 +1,109 @@
+table olpn
+	lineageTag: e27faabd-c41d-4d36-8932-28e9f1c97f5a
+
+	column tipo_de_pedido
+		dataType: string
+		lineageTag: 6b196ae3-c9c1-4bef-9353-e3ae26fe52bb
+		summarizeBy: none
+		sourceColumn: tipo_de_pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column local_de_picking
+		dataType: string
+		lineageTag: 31b6b85d-2069-412b-b557-45475b261ae7
+		summarizeBy: none
+		sourceColumn: local_de_picking
+
+		annotation SummarizationSetBy = Automatic
+
+	column qt_pecas
+		dataType: int64
+		formatString: 0
+		lineageTag: 39375cfd-7540-4f5a-adb3-c7cf2bcd3070
+		summarizeBy: sum
+		sourceColumn: qt_pecas
+
+		annotation SummarizationSetBy = Automatic
+
+	column box
+		dataType: string
+		lineageTag: 5939c01b-ce61-458e-bd88-d267c23d7ed2
+		summarizeBy: none
+		sourceColumn: box
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_setor_item
+		dataType: string
+		lineageTag: d5639a6f-3249-44be-a9f3-0c51ca8fd4a8
+		summarizeBy: none
+		sourceColumn: desc_setor_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column setores
+		dataType: string
+		lineageTag: 1c1a2590-0d20-4d75-a0e3-13abd326ac95
+		summarizeBy: none
+		sourceColumn: setores
+
+		annotation SummarizationSetBy = Automatic
+
+	column localizacao
+		dataType: string
+		lineageTag: 397ffc5b-b878-4a9c-8537-479203711a6d
+		summarizeBy: none
+		sourceColumn: localizacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criterio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 310642ac-d122-4fbc-8841-0738842e0f58
+		summarizeBy: none
+		sourceColumn: data_criterio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: d9d2ad70-a7fe-42ad-b45c-fdb80a2e58dd
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column volume
+		dataType: double
+		lineageTag: 7d265ac3-002b-4758-96d5-4ece2ea64182
+		summarizeBy: sum
+		sourceColumn: volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition olpn = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"e51e0639-c724-46c5-83cb-f9a54649ca55" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="e51e0639-c724-46c5-83cb-f9a54649ca55"]}[Data],
+				    df_banco_de_dados_olpn_eficiencia_operacional_ = #"e51e0639-c724-46c5-83cb-f9a54649ca55"{[entity="df_banco_de_dados_olpn_eficiencia_operacional",version=""]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_olpn_eficiencia_operacional_,{"data_locacao_pedido", "filial_destino", "pedido", "olpn", "data_hora_ultimo_update_olpn", "tarefa", "item", "status_olpn", "audit_status", "rua", "endereco", "nivel", "situacao_prazo"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
