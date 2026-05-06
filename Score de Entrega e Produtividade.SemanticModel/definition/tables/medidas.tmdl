@@ -131,13 +131,20 @@ table medidas
 		displayFolder: Análise Prescritiva\Nº Macro\Putaway
 		lineageTag: 7acdb23a-ff4a-4b3d-9d3b-dc712b9275c2
 
-	measure eficiencia_sla = ```
+	measure eficiencia_sla =
 			
-			1 - 
-			DIVIDE(
-			    [qt_cancelada],
-			    [qt_olpn])
-			```
+			VAR resultado =
+			    1 -
+			    DIVIDE(
+			        [qt_cancelada],
+			        [qt_olpn]
+			    )
+			RETURN
+			    IF(
+			        resultado = 1,
+			        BLANK(),
+			        resultado
+			    )
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Análise Prescritiva\Nº Macro\SLA
 		lineageTag: 3b61895f-9086-4c6a-a078-6cd34b74b95e
