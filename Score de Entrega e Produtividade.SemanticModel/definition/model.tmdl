@@ -10,7 +10,7 @@ annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBIDesktopVersion = 2.144.679.0 (25.06)+ef40146207b86a826d1c72a7727a743ee37450e9
 
-annotation PBI_QueryOrder = ["bottleneck_box","bottleneck_galpao","cancel","load","olpn","picking","putaway","usuarios","aux_box","aux_zona","d_calendario","aux_update","aux_departamento","aux_setores","aux_tpedido","aux_local_cd","medidas","time_lead_olpn","jornada","aux_on_time","aux_hora","packing","capacity_1200"]
+annotation PBI_QueryOrder = ["bottleneck_box","bottleneck_galpao","cancel","load","olpn","picking","putaway","usuarios","aux_box","aux_zona","d_calendario","aux_update","aux_departamento","aux_setores","aux_tpedido","aux_local_cd","medidas","time_lead_olpn","jornada","aux_on_time","aux_hora","packing","df_banco_de_dados_registro_de_capacidade"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -37,7 +37,7 @@ ref table desvio_padrao
 ref table aux_on_time
 ref table aux_hora
 ref table packing
-ref table capacity_1200
+ref table df_banco_de_dados_registro_de_capacidade
 
 ref cultureInfo pt-BR
 

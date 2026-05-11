@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 524.38205599999856,
+        "x": 17.715609999999952,
         "y": 0
       },
       "nodes": [
@@ -19,7 +19,7 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 24,
+          "zIndex": 22,
           "expandedHeight": 128
         },
         {
@@ -33,7 +33,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 4,
+          "zIndex": 3,
           "expandedHeight": 152
         },
         {
@@ -47,7 +47,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 5,
+          "zIndex": 4,
           "expandedHeight": 104
         },
         {
@@ -58,11 +58,10 @@
           "nodeIndex": "aux_setores",
           "nodeLineageTag": "ddaf8a45-9ac3-4e30-aeb3-d862fcb6a56b",
           "size": {
-            "height": 72,
+            "height": 128,
             "width": 234
           },
-          "zIndex": 6,
-          "expandedHeight": 128
+          "zIndex": 25
         },
         {
           "location": {
@@ -75,7 +74,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 7,
+          "zIndex": 5,
           "expandedHeight": 104
         },
         {
@@ -89,7 +88,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 8,
+          "zIndex": 6,
           "expandedHeight": 128
         },
         {
@@ -103,7 +102,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 9,
+          "zIndex": 7,
           "expandedHeight": 128
         },
         {
@@ -117,7 +116,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 10,
+          "zIndex": 8,
           "expandedHeight": 200
         },
         {
@@ -131,7 +130,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 11,
+          "zIndex": 9,
           "expandedHeight": 200
         },
         {
@@ -145,21 +144,21 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 12,
+          "zIndex": 10,
           "expandedHeight": 300
         },
         {
           "location": {
-            "x": 2100.7227371202875,
+            "x": 2090.0933711202874,
             "y": 0
           },
           "nodeIndex": "d_calendario",
           "nodeLineageTag": "f464fa8b-5ced-4d60-835d-d1b1ec30edef",
           "size": {
-            "height": 72,
+            "height": 104,
             "width": 234
           },
-          "zIndex": 13,
+          "zIndex": 11,
           "expandedHeight": 300
         },
         {
@@ -173,7 +172,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 14,
+          "zIndex": 12,
           "expandedHeight": 272
         },
         {
@@ -187,7 +186,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 15,
+          "zIndex": 13,
           "expandedHeight": 300
         },
         {
@@ -201,7 +200,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 16,
+          "zIndex": 14,
           "expandedHeight": 104
         },
         {
@@ -215,7 +214,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 17,
+          "zIndex": 15,
           "expandedHeight": 300
         },
         {
@@ -229,7 +228,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 18,
+          "zIndex": 16,
           "expandedHeight": 300
         },
         {
@@ -243,7 +242,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 19,
+          "zIndex": 17,
           "expandedHeight": 200
         },
         {
@@ -257,7 +256,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 20,
+          "zIndex": 18,
           "expandedHeight": 152
         },
         {
@@ -271,7 +270,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 21
+          "zIndex": 19
         },
         {
           "location": {
@@ -284,7 +283,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 22,
+          "zIndex": 20,
           "expandedHeight": 128
         },
         {
@@ -298,7 +297,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 23,
+          "zIndex": 21,
           "expandedHeight": 104
         },
         {
@@ -312,7 +311,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 1,
+          "zIndex": 24,
           "expandedHeight": 128
         },
         {
@@ -325,7 +324,7 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 2,
+          "zIndex": 1,
           "expandedHeight": 300
         },
         {
@@ -338,8 +337,21 @@
             "height": 72,
             "width": 234
           },
-          "zIndex": 3,
+          "zIndex": 2,
           "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 2476.883532589397,
+            "y": 1078.9389520027444
+          },
+          "nodeIndex": "df_banco_de_dados_registro_de_capacidade",
+          "nodeLineageTag": "6807e1ba-5972-4eb6-ad66-bec52a4a2b95",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 23
         }
       ],
       "name": "Todas as tabelas",

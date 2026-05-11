@@ -183,11 +183,16 @@ relationship 6c087efa-db74-1b46-1903-948f60a38e1b
 	fromColumn: packing.data_criterio
 	toColumn: d_calendario.Data
 
-relationship 5bd038dc-d22e-baa4-5d00-3f4e07bcf797
-	fromColumn: capacity_1200.Setores
-	toColumn: aux_setores.setores
-
 relationship 2a79491a-d2b2-0abf-a7be-60661e28a748
 	fromColumn: olpn.hora
 	toColumn: aux_hora.hora
+
+relationship 4a1b29ff-c6d7-8f5c-f3f6-630cb90a364f
+	crossFilteringBehavior: bothDirections
+	fromColumn: df_banco_de_dados_registro_de_capacidade.data_dia
+	toColumn: d_calendario.Data
+
+relationship 52039955-13e3-d768-a5b1-7c558fd36036
+	fromColumn: df_banco_de_dados_registro_de_capacidade.setor
+	toColumn: aux_setores.setores
 

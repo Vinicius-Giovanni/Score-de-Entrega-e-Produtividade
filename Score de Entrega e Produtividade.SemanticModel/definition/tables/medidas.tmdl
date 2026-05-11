@@ -1262,7 +1262,7 @@ table medidas
 			VAR vCap =
 			SWITCH(
 			    TRUE(),
-			    SUM(capacity_1200[Capacity]) < 0, "-",
+			    SUM(df_banco_de_dados_registro_de_capacidade[capacity]) < 0, "-",
 			    vTotal_vendas = 0 , "-",
 			    FORMAT([cap_din_calendar], "0.0%"))
 			        
@@ -1297,11 +1297,12 @@ table medidas
 			
 			DIVIDE(
 			    [qt_olpn],
-			    INT(SUM(capacity_1200[Capacity]))
+			    INT(SUM(df_banco_de_dados_registro_de_capacidade[capacity]))
 			)
-		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Calendário Dinâmico
 		lineageTag: da1ee529-903a-4b88-9489-f50c11d8d692
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure format_ind_valores =
 			
@@ -3386,7 +3387,7 @@ table medidas
 
 	measure soma_capacidade =
 			
-			SUM(capacity_1200[Capacity])
+			SUM(df_banco_de_dados_registro_de_capacidade[capacity])
 		formatString: 0
 		displayFolder: Análise Prescritiva\Capacidade
 		lineageTag: af3bca9e-57b9-472b-83cb-26404c3949da
@@ -3397,7 +3398,42 @@ table medidas
 			IF([qt_movimentada_din_user] > [soma_capacidade],
 			"#850000",
 			"#12239E")
+		displayFolder: Outros
 		lineageTag: 021653a4-bd2f-4805-bf5a-88c451366f02
+
+	measure calendario_expedidos_teste = ```
+			
+			
+			VAR vDia = 
+			SELECTEDVALUE(d_calendario[Dia])
+			
+			VAR vTotal_vendas = 
+			[qt_movimentada_din_user]
+			
+			VAR vTotal_vendas_formatada = 
+			    SWITCH(
+			        TRUE(),
+			        vTotal_vendas >= 1000000000, FORMAT(vTotal_vendas, "#,0,,,.00 bi"),
+			        vTotal_vendas >= 1000000, FORMAT(vTotal_vendas, "#,0,,.00 mi"),
+			        vTotal_vendas >= 1000, FORMAT(vTotal_vendas, "#,0,.00 k"),
+			        FORMAT(vTotal_vendas, "#"))
+			
+			VAR vCap =
+			SWITCH(
+			    TRUE(),
+			    SUM(df_banco_de_dados_registro_de_capacidade[capacity]) < 0, "-",
+			    vTotal_vendas = 0 , "-",
+			    FORMAT([cap_din_calendar], "0.0%"))
+			        
+			VAR retorna = 
+			vDia& UNICHAR(10)
+			&vTotal_vendas_formatada& UNICHAR(10)
+			&vCap
+			
+			RETURN 
+			retorna
+			```
+		lineageTag: 7a8ff1dc-0609-440d-a6ac-b992a78eb22f
 
 	column 'Coluna 1'
 		dataType: string

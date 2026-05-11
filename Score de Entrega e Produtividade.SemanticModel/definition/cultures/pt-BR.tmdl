@@ -452,7 +452,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Motivo(Padrão) / Motivo(Inserido)": {
+			          "Motivo(Padrão)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -462,7 +462,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Motivo(Padrão)": {
+			          "Motivo(Padrão) / Motivo(Inserido)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -3882,6 +3882,16 @@ cultureInfo pt-BR
 			          "setore": {
 			            "State": "Generated"
 			          }
+			        },
+			        {
+			          "Setor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -4176,7 +4186,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Cancel": {
+			          "Pçs": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -4186,7 +4196,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Pçs": {
+			          "Cancel": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -5787,7 +5797,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Expedido |": {
+			          "Total Expedido por Dia": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -5797,7 +5807,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Total Expedido por Dia": {
+			          "Expedido |": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -5860,7 +5870,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "IN FULL": {
+			          "IF": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -5870,7 +5880,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "IF": {
+			          "IN FULL": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -6695,7 +6705,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Conferência": {
+			          "Tempo Médio Conferência": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -6705,7 +6715,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Tempo Médio Conferência": {
+			          "Conferência": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -6979,7 +6989,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Separação": {
+			          "Tempo Médio Separação": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -6989,7 +6999,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Tempo Médio Separação": {
+			          "Separação": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -7207,7 +7217,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Puxada": {
+			          "Tempo Médio Puxada": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -7217,7 +7227,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Tempo Médio Puxada": {
+			          "Puxada": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -8643,7 +8653,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Embalagem": {
+			          "Tempo Médio Embalagem": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -8653,7 +8663,7 @@ cultureInfo pt-BR
 			          }
 			        },
 			        {
-			          "Tempo Médio Embalagem": {
+			          "Embalagem": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -9450,163 +9460,6 @@ cultureInfo pt-BR
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
-			          }
-			        }
-			      ]
-			    },
-			    "capacity_1200": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "capacity_1200"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "capacity 1200": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "capacity_1200": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        }
-			      ]
-			    },
-			    "capacity_1200.setore": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "capacity_1200",
-			          "ConceptualProperty": "Setores"
-			        }
-			      },
-			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
-			      "Terms": [
-			        {
-			          "setore": {
-			            "State": "Generated"
-			          }
-			        }
-			      ]
-			    },
-			    "capacity_1200.capacity": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "capacity_1200",
-			          "ConceptualProperty": "Capacity"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "capacity": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "size": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "bulk": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "ability": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "capability": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "aptitude": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "faculty": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "competence": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "facility": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "power": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.452
-			          }
-			        },
-			        {
-			          "gift": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.452
 			          }
 			        }
 			      ]
@@ -20391,9 +20244,342 @@ cultureInfo pt-BR
 			          }
 			        }
 			      ]
+			    },
+			    "medida.calendario_expedidos_teste": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "medidas",
+			          "ConceptualProperty": "calendario_expedidos_teste"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "calendario expedidos teste": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "calendario_expedidos_teste": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "df_banco_de_dados_registro_de_capacidade": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "df banco de dados registro de capacidade": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "df banco de dado registro de capacidade": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "df_banco_de_dados_registro_de_capacidade": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "df_banco_de_dados_registro_de_capacidade.data_dia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade",
+			          "ConceptualProperty": "data_dia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "data dia": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "data_dia": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "date": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        },
+			        {
+			          "information dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "fact dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "info dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "statistic dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "document dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "figure dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "record dia": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "df_banco_de_dados_registro_de_capacidade.setor": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade",
+			          "ConceptualProperty": "setor"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "setor": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "df_banco_de_dados_registro_de_capacidade.capacity": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade",
+			          "ConceptualProperty": "capacity"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "capacity": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "size": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "bulk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "ability": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "capability": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "aptitude": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "faculty": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "competence": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "facility": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "power": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        },
+			        {
+			          "gift": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
+			    "packing_has_d_calendario": {
+			      "Binding": {
+			        "ConceptualEntity": "packing"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "packing": {
+			          "Target": {
+			            "Entity": "packing"
+			          }
+			        },
+			        "d_calendario": {
+			          "Target": {
+			            "Entity": "d_calendario"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "packing"
+			            },
+			            "Object": {
+			              "Role": "d_calendario"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "packing_have_d_calendarios"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "d_calendario"
+			            },
+			            "Object": {
+			              "Role": "packing"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "d_calendarios_have_packing"
+			        }
+			      ]
+			    },
 			    "packing_has_usuario": {
 			      "Binding": {
 			        "ConceptualEntity": "packing"
@@ -22425,6 +22611,105 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
+			    "df_banco_de_dados_registro_de_capacidade_has_capacity": {
+			      "Binding": {
+			        "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "df_banco_de_dados_registro_de_capacidade": {
+			          "Target": {
+			            "Entity": "df_banco_de_dados_registro_de_capacidade"
+			          }
+			        },
+			        "df_banco_de_dados_registro_de_capacidade.capacity": {
+			          "Target": {
+			            "Entity": "df_banco_de_dados_registro_de_capacidade.capacity"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
+			            },
+			            "Object": {
+			              "Role": "df_banco_de_dados_registro_de_capacidade.capacity"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "df_banco_de_dados_registro_de_capacidades_have_capacities"
+			        }
+			      ]
+			    },
+			    "df_banco_de_dados_registro_de_capacidade_has_data_dia": {
+			      "Binding": {
+			        "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "df_banco_de_dados_registro_de_capacidade": {
+			          "Target": {
+			            "Entity": "df_banco_de_dados_registro_de_capacidade"
+			          }
+			        },
+			        "df_banco_de_dados_registro_de_capacidade.data_dia": {
+			          "Target": {
+			            "Entity": "df_banco_de_dados_registro_de_capacidade.data_dia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
+			            },
+			            "Object": {
+			              "Role": "df_banco_de_dados_registro_de_capacidade.data_dia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "df_banco_de_dados_registro_de_capacidades_have_data_dias"
+			        }
+			      ]
+			    },
+			    "medida_has_calendario_expedidos_teste": {
+			      "Binding": {
+			        "ConceptualEntity": "medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.calendario_expedidos_teste": {
+			          "Target": {
+			            "Entity": "medida.calendario_expedidos_teste"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.calendario_expedidos_teste"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medidas_have_calendario_expedidos_teste"
+			        }
+			      ]
+			    },
 			    "medida_has_cor_coluna": {
 			      "Binding": {
 			        "ConceptualEntity": "medidas"
@@ -22455,39 +22740,6 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "medidas_have_cor_coluna"
-			        }
-			      ]
-			    },
-			    "capacity_1200_has_medida_soma_capacidade": {
-			      "Binding": {
-			        "ConceptualEntity": "capacity_1200"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "capacity_1200": {
-			          "Target": {
-			            "Entity": "capacity_1200"
-			          }
-			        },
-			        "medida.soma_capacidade": {
-			          "Target": {
-			            "Entity": "medida.soma_capacidade"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "capacity_1200"
-			            },
-			            "Object": {
-			              "Role": "medida.soma_capacidade"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "capacity_1200_have_soma_capacidade"
 			        }
 			      ]
 			    },
@@ -27177,15 +27429,15 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "olpn_has_medida_SLA_m1": {
+			    "medida_has_SLA_m1": {
 			      "Binding": {
-			        "ConceptualEntity": "olpn"
+			        "ConceptualEntity": "medidas"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "olpn": {
+			        "medida": {
 			          "Target": {
-			            "Entity": "olpn"
+			            "Entity": "medida"
 			          }
 			        },
 			        "medida.SLA_m1": {
@@ -27198,7 +27450,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "olpn"
+			              "Role": "medida"
 			            },
 			            "Object": {
 			              "Role": "medida.SLA_m1"
@@ -27206,40 +27458,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "olpns_have_SLA_m1"
-			        }
-			      ]
-			    },
-			    "cancel_has_medida_SLA_m1": {
-			      "Binding": {
-			        "ConceptualEntity": "cancel"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "cancel": {
-			          "Target": {
-			            "Entity": "cancel"
-			          }
-			        },
-			        "medida.SLA_m1": {
-			          "Target": {
-			            "Entity": "medida.SLA_m1"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "cancel"
-			            },
-			            "Object": {
-			              "Role": "medida.SLA_m1"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "cancels_have_SLA_m1"
+			          "ID": "medidas_have_SLA_m1"
 			        }
 			      ]
 			    },
@@ -27669,39 +27888,6 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "olpns_have_cap_din_calendar"
-			        }
-			      ]
-			    },
-			    "capacity_1200_has_medida_cap_din_calendar": {
-			      "Binding": {
-			        "ConceptualEntity": "capacity_1200"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "capacity_1200": {
-			          "Target": {
-			            "Entity": "capacity_1200"
-			          }
-			        },
-			        "medida.cap_din_calendar": {
-			          "Target": {
-			            "Entity": "medida.cap_din_calendar"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "capacity_1200"
-			            },
-			            "Object": {
-			              "Role": "medida.cap_din_calendar"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "capacity_1200_have_cap_din_calendar"
 			        }
 			      ]
 			    },
@@ -28989,39 +29175,6 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "medidas_have_media_loading_string"
-			        }
-			      ]
-			    },
-			    "capacity_1200_has_capacity": {
-			      "Binding": {
-			        "ConceptualEntity": "capacity_1200"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "capacity_1200": {
-			          "Target": {
-			            "Entity": "capacity_1200"
-			          }
-			        },
-			        "capacity_1200.capacity": {
-			          "Target": {
-			            "Entity": "capacity_1200.capacity"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "capacity_1200"
-			            },
-			            "Object": {
-			              "Role": "capacity_1200.capacity"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "capacity_1200_have_capacities"
 			        }
 			      ]
 			    },
@@ -31137,15 +31290,15 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "olpn_has_medida_eficiencia_sla": {
+			    "medida_has_eficiencia_sla": {
 			      "Binding": {
-			        "ConceptualEntity": "olpn"
+			        "ConceptualEntity": "medidas"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "olpn": {
+			        "medida": {
 			          "Target": {
-			            "Entity": "olpn"
+			            "Entity": "medida"
 			          }
 			        },
 			        "medida.eficiencia_sla": {
@@ -31158,7 +31311,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "olpn"
+			              "Role": "medida"
 			            },
 			            "Object": {
 			              "Role": "medida.eficiencia_sla"
@@ -31166,40 +31319,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "olpns_have_eficiencia_sla"
-			        }
-			      ]
-			    },
-			    "cancel_has_medida_eficiencia_sla": {
-			      "Binding": {
-			        "ConceptualEntity": "cancel"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "cancel": {
-			          "Target": {
-			            "Entity": "cancel"
-			          }
-			        },
-			        "medida.eficiencia_sla": {
-			          "Target": {
-			            "Entity": "medida.eficiencia_sla"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "cancel"
-			            },
-			            "Object": {
-			              "Role": "medida.eficiencia_sla"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "cancels_have_eficiencia_sla"
+			          "ID": "medidas_have_eficiencia_sla"
 			        }
 			      ]
 			    },
@@ -33196,15 +33316,15 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "packing_has_d_calendario": {
+			    "df_banco_de_dados_registro_de_capacidade_has_d_calendario": {
 			      "Binding": {
-			        "ConceptualEntity": "packing"
+			        "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "packing": {
+			        "df_banco_de_dados_registro_de_capacidade": {
 			          "Target": {
-			            "Entity": "packing"
+			            "Entity": "df_banco_de_dados_registro_de_capacidade"
 			          }
 			        },
 			        "d_calendario": {
@@ -33217,7 +33337,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "packing"
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
 			            },
 			            "Object": {
 			              "Role": "d_calendario"
@@ -33225,7 +33345,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "packing_have_d_calendarios"
+			          "ID": "df_banco_de_dados_registro_de_capacidades_have_d_calendarios"
 			        },
 			        {
 			          "Attribute": {
@@ -33233,24 +33353,24 @@ cultureInfo pt-BR
 			              "Role": "d_calendario"
 			            },
 			            "Object": {
-			              "Role": "packing"
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "d_calendarios_have_packing"
+			          "ID": "d_calendarios_have_df_banco_de_dados_registro_de_capacidades"
 			        }
 			      ]
 			    },
-			    "capacity_1200_has_aux_setore": {
+			    "df_banco_de_dados_registro_de_capacidade_has_aux_setore": {
 			      "Binding": {
-			        "ConceptualEntity": "capacity_1200"
+			        "ConceptualEntity": "df_banco_de_dados_registro_de_capacidade"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "capacity_1200": {
+			        "df_banco_de_dados_registro_de_capacidade": {
 			          "Target": {
-			            "Entity": "capacity_1200"
+			            "Entity": "df_banco_de_dados_registro_de_capacidade"
 			          }
 			        },
 			        "aux_setore": {
@@ -33263,7 +33383,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "capacity_1200"
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
 			            },
 			            "Object": {
 			              "Role": "aux_setore"
@@ -33271,7 +33391,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "capacity_1200_have_aux_setores"
+			          "ID": "df_banco_de_dados_registro_de_capacidades_have_aux_setores"
 			        },
 			        {
 			          "Attribute": {
@@ -33279,12 +33399,12 @@ cultureInfo pt-BR
 			              "Role": "aux_setore"
 			            },
 			            "Object": {
-			              "Role": "capacity_1200"
+			              "Role": "df_banco_de_dados_registro_de_capacidade"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "aux_setores_have_capacity_1200"
+			          "ID": "aux_setores_have_df_banco_de_dados_registro_de_capacidades"
 			        }
 			      ]
 			    }

@@ -1,0 +1,47 @@
+table df_banco_de_dados_registro_de_capacidade
+	lineageTag: 6807e1ba-5972-4eb6-ad66-bec52a4a2b95
+
+	column data_dia
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a60af5ec-d0ce-408e-8562-6a479aa73d61
+		summarizeBy: none
+		sourceColumn: data_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column setor
+		dataType: string
+		lineageTag: f7ba43c9-9d39-496c-bbf6-562137f62689
+		summarizeBy: none
+		sourceColumn: setor
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity
+		dataType: int64
+		formatString: #,0
+		lineageTag: 05250e23-4824-4bc6-a611-34064f7dc8db
+		summarizeBy: sum
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition df_banco_de_dados_registro_de_capacidade = m
+		mode: import
+		source =
+				let
+				    Fonte = PowerPlatform.Dataflows(null),
+				    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
+				    #"c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce"]}[Data],
+				    df_banco_de_dados_registro_de_capacidade_ = #"c797d0dc-e56e-4e23-b8a2-9e0f2c2285ce"{[entity="df_banco_de_dados_registro_de_capacidade",version=""]}[Data]
+				in
+				    df_banco_de_dados_registro_de_capacidade_
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
