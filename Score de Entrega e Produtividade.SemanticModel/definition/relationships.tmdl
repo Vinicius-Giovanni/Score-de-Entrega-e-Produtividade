@@ -188,7 +188,6 @@ relationship 2a79491a-d2b2-0abf-a7be-60661e28a748
 	toColumn: aux_hora.hora
 
 relationship 4a1b29ff-c6d7-8f5c-f3f6-630cb90a364f
-	crossFilteringBehavior: bothDirections
 	fromColumn: df_banco_de_dados_registro_de_capacidade.data_dia
 	toColumn: d_calendario.Data
 

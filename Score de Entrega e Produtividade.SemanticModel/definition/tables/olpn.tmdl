@@ -90,6 +90,15 @@ table olpn
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column item
+		dataType: int64
+		formatString: 0
+		lineageTag: d287f6d5-973e-475a-ab3e-de010a011947
+		summarizeBy: sum
+		sourceColumn: item
+
+		annotation SummarizationSetBy = Automatic
+
 	partition olpn = m
 		mode: import
 		source =
@@ -99,7 +108,7 @@ table olpn
 				    #"ad52077a-cb57-4d00-bc6c-32a23a7d230e" = Workspaces{[workspaceId="ad52077a-cb57-4d00-bc6c-32a23a7d230e"]}[Data],
 				    #"e51e0639-c724-46c5-83cb-f9a54649ca55" = #"ad52077a-cb57-4d00-bc6c-32a23a7d230e"{[dataflowId="e51e0639-c724-46c5-83cb-f9a54649ca55"]}[Data],
 				    df_banco_de_dados_olpn_eficiencia_operacional_ = #"e51e0639-c724-46c5-83cb-f9a54649ca55"{[entity="df_banco_de_dados_olpn_eficiencia_operacional",version=""]}[Data],
-				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_olpn_eficiencia_operacional_,{"data_locacao_pedido", "filial_destino", "pedido", "olpn", "data_hora_ultimo_update_olpn", "tarefa", "item", "status_olpn", "audit_status", "rua", "endereco", "nivel", "situacao_prazo"})
+				    #"Colunas Removidas" = Table.RemoveColumns(df_banco_de_dados_olpn_eficiencia_operacional_,{"data_locacao_pedido", "filial_destino", "pedido", "olpn", "data_hora_ultimo_update_olpn", "tarefa", "status_olpn", "audit_status", "rua", "endereco", "nivel", "situacao_prazo"})
 				in
 				    #"Colunas Removidas"
 

@@ -1390,12 +1390,7 @@ table medidas
 			
 			
 			VAR vSaudacao = 
-			SWITCH(
-			    TRUE(),
-			    HOUR(NOW()) >= 6 && HOUR(NOW()) < 12, "Bom dia!",
-			    HOUR(NOW()) >= 12 && HOUR(NOW()) < 18, "Boa tarde!",
-			    "Boa noite!"
-			)
+			"Seja Bem-Vindo! "
 			
 			VAR vNome = 
 			[usuario]
